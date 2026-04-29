@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ING Beats Silesia 2026 — App Production Checklist</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0a0b0f;--bg2:#12131a;--bg3:#1a1b26;--bg4:#21222e;
+  --tx:#c8cad0;--tx2:#8b8d98;--tx3:#5c5e6a;
+  --ac:#ff6b35;--ac2:#e85a28;--ac3:rgba(255,107,53,.12);
+  --red:#ff5c6c;--red-bg:rgba(255,92,108,.1);
+  --orange:#ffb347;--orange-bg:rgba(255,179,71,.1);
+  --yellow:#ffd93d;--yellow-bg:rgba(255,217,61,.1);
+  --blue:#5cb8ff;--blue-bg:rgba(92,184,255,.1);
+  --green:#00d68f;--green-bg:rgba(0,214,143,.1);
+  --purple:#b794f6;--purple-bg:rgba(183,148,246,.1);
+  --border:#2a2b37;--border2:#363848;
+  --heading:#fff;
+  --radius:6px;
+  --sidebar-w:300px;
+}
+
+html.light{
+  --bg:#f5f6f8;--bg2:#ffffff;--bg3:#ebedf0;--bg4:#dcdee3;
+  --tx:#2c2e35;--tx2:#5a5d68;--tx3:#8b8e9a;
+  --ac:#d54a1a;--ac2:#b83d12;--ac3:rgba(213,74,26,.08);
+  --red:#d93025;--red-bg:rgba(217,48,37,.07);
+  --orange:#e37400;--orange-bg:rgba(227,116,0,.07);
+  --yellow:#b8860b;--yellow-bg:rgba(184,134,11,.07);
+  --blue:#1a73e8;--blue-bg:rgba(26,115,232,.07);
+  --green:#0a8c5a;--green-bg:rgba(10,140,90,.07);
+  --purple:#7c3aed;--purple-bg:rgba(124,58,237,.07);
+  --border:#d4d6dc;--border2:#c0c3cb;
+  --heading:#1a1c22;
+}
+
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--bg4) var(--bg)}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--tx);line-height:1.65;font-size:15px;overflow-x:hidden}
+::selection{background:var(--ac);color:var(--bg)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+
+.layout{display:flex;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .3s}
+.main{margin-left:var(--sidebar-w);flex:1;min-width:0}
+.content{max-width:920px;margin:0 auto;padding:48px 40px 120px}
+
+.sidebar-header{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
+.sidebar-logo{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--ac);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.sidebar-title{font-size:15px;font-weight:600;color:var(--tx);line-height:1.3}
+.sidebar-sub{font-size:11px;color:var(--tx3);margin-top:4px;font-family:'JetBrains Mono',monospace}
+
+.sidebar-nav{flex:1;overflow-y:auto;padding:8px 0}
+.nav-section{padding:4px 16px;margin-top:12px}
+.nav-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:6px;font-family:'JetBrains Mono',monospace}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 16px;font-size:13px;color:var(--tx2);cursor:pointer;border-radius:var(--radius);margin:1px 8px;transition:all .15s;text-decoration:none;border-left:2px solid transparent}
+.nav-item:hover{color:var(--tx);background:var(--bg3)}
+.nav-item.active{color:var(--ac);background:var(--ac3);border-left-color:var(--ac)}
+.nav-item .nav-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.nav-item .nav-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tx3);margin-left:auto}
+
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--tx3);font-family:'JetBrains Mono',monospace}
+
+.theme-toggle{position:absolute;top:24px;right:16px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;width:44px;height:24px;cursor:pointer;padding:0;display:flex;align-items:center;transition:background .2s,border .2s}
+.theme-toggle::after{content:'';width:18px;height:18px;border-radius:50%;background:var(--tx2);margin-left:3px;transition:transform .2s,background .2s}
+html.light .theme-toggle::after{transform:translateX(20px);background:var(--ac)}
+
+.menu-toggle{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--tx);padding:8px 12px;cursor:pointer;font-size:16px}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99}
+
+h1{font-size:32px;font-weight:800;color:var(--heading);margin-bottom:8px;letter-spacing:-.02em;line-height:1.2}
+h2{font-size:22px;font-weight:700;color:var(--heading);margin:48px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border);letter-spacing:-.01em}
+h3{font-size:16px;font-weight:600;color:var(--tx);margin:28px 0 12px}
+h4{font-size:14px;font-weight:600;color:var(--tx2);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.04em;font-family:'JetBrains Mono',monospace}
+
+.section-intro{color:var(--tx2);margin-bottom:32px;font-size:15px;max-width:680px}
+.section-divider{height:1px;background:var(--border);margin:48px 0}
+section[id]{scroll-margin-top:24px}
+
+.hero{padding:48px 0 0}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;background:var(--ac3);border:1px solid rgba(255,107,53,.2);border-radius:20px;font-size:11px;font-weight:600;color:var(--ac);font-family:'JetBrains Mono',monospace;margin-bottom:16px;letter-spacing:.04em}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--ac);border-radius:50%;animation:pulse 2s infinite}
+.hero-badge.v2{background:var(--purple-bg);border-color:rgba(183,148,246,.2);color:var(--purple)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-desc{color:var(--tx2);font-size:16px;max-width:640px;line-height:1.7}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:32px 0}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;transition:border .2s}
+.stat-card:hover{border-color:var(--border2)}
+.stat-value{font-size:24px;font-weight:700;color:var(--heading);font-family:'JetBrains Mono',monospace}
+.stat-label{font-size:12px;color:var(--tx3);margin-top:2px}
+.stat-value.green{color:var(--green)}
+.stat-value.red{color:var(--red)}
+.stat-value.orange{color:var(--orange)}
+.stat-value.ac{color:var(--ac)}
+.stat-value.purple{color:var(--purple)}
+
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--border);border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead{background:var(--bg3)}
+th{padding:10px 14px;text-align:left;font-weight:600;color:var(--tx2);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-family:'JetBrains Mono',monospace;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--tx);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--bg3)}
+td code{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--bg3);padding:2px 6px;border-radius:3px;color:var(--ac)}
+td.deadline{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx2);white-space:nowrap}
+td.owner{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);white-space:nowrap}
+
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.7;color:var(--tx);margin:16px 0}
+code{font-family:'JetBrains Mono',monospace;font-size:12px}
+.inline-code{background:var(--bg3);padding:2px 6px;border-radius:3px;color:var(--ac);font-size:12px}
+
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;letter-spacing:.02em;white-space:nowrap}
+.badge-crit{background:var(--red-bg);color:var(--red);border:1px solid rgba(255,92,108,.2)}
+.badge-high{background:var(--orange-bg);color:var(--orange);border:1px solid rgba(255,179,71,.2)}
+.badge-med{background:var(--yellow-bg);color:var(--yellow);border:1px solid rgba(255,217,61,.2)}
+.badge-ok{background:var(--green-bg);color:var(--green);border:1px solid rgba(0,214,143,.2)}
+.badge-info{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(92,184,255,.2)}
+.badge-ac{background:var(--ac3);color:var(--ac);border:1px solid rgba(255,107,53,.2)}
+.badge-pawel{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(183,148,246,.2)}
+
+.owner-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+.owner-pmg{background:var(--blue-bg);color:var(--blue)}
+.owner-line{background:var(--ac3);color:var(--ac)}
+.owner-joint{background:var(--green-bg);color:var(--green)}
+.owner-ing{background:var(--purple-bg);color:var(--purple)}
+
+.timeline{position:relative;margin:32px 0;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.timeline-item{position:relative;padding:12px 0 12px 24px;margin-bottom:8px}
+.timeline-item::before{content:'';position:absolute;left:-30px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--bg3);border:2px solid var(--border)}
+.timeline-item.crit::before{background:var(--red);border-color:var(--red)}
+.timeline-item.high::before{background:var(--orange);border-color:var(--orange)}
+.timeline-item.med::before{background:var(--yellow);border-color:var(--yellow)}
+.timeline-item.ok::before{background:var(--green);border-color:var(--green)}
+.timeline-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.timeline-title{font-weight:600;color:var(--heading);font-size:14px;margin-bottom:4px}
+.timeline-desc{color:var(--tx2);font-size:13px;line-height:1.6}
+
+.push-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin:10px 0;display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:start}
+.push-when{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ac);font-weight:600;letter-spacing:.04em}
+.push-content .push-title{font-weight:600;color:var(--heading);font-size:14px;margin-bottom:4px}
+.push-content .push-body{color:var(--tx2);font-size:13px;line-height:1.5}
+.push-content .push-template{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx2);background:var(--bg3);padding:6px 10px;border-radius:3px;margin-top:6px;border-left:2px solid var(--ac)}
+
+.folder-tree{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;margin:16px 0;color:var(--tx2);white-space:pre;overflow-x:auto}
+.folder-tree .folder{color:var(--ac);font-weight:600}
+.folder-tree .file{color:var(--tx)}
+.folder-tree .comment{color:var(--tx3);font-size:11px}
+
+.callout{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--ac);border-radius:var(--radius);padding:14px 18px;margin:16px 0;color:var(--tx2);font-size:13px;line-height:1.6}
+.callout.warn{border-left-color:var(--orange)}
+.callout.crit{border-left-color:var(--red)}
+.callout.ok{border-left-color:var(--green)}
+.callout.pawel{border-left-color:var(--purple)}
+.callout strong{color:var(--heading)}
+
+.checklist{list-style:none;padding:0;margin:12px 0}
+.checklist li{padding:6px 0 6px 26px;position:relative;color:var(--tx2);font-size:13px;line-height:1.5}
+.checklist li::before{content:'☐';position:absolute;left:0;top:6px;color:var(--tx3);font-size:14px;font-family:'JetBrains Mono',monospace}
+.checklist li strong{color:var(--tx)}
+
+.qcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin:8px 0;display:flex;gap:14px;align-items:start}
+.qcard .qnum{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bg);background:var(--purple);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;margin-top:2px}
+.qcard .qbody{flex:1}
+.qcard .qbody strong{color:var(--heading);display:block;margin-bottom:4px;font-size:14px}
+.qcard .qbody p{color:var(--tx2);font-size:13px;line-height:1.5}
+
+.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin:10px 0}
+.kpi-card .kpi-name{font-weight:600;color:var(--heading);font-size:14px;margin-bottom:6px}
+.kpi-card .kpi-target{font-family:'JetBrains Mono',monospace;color:var(--ac);font-size:13px;margin-bottom:6px}
+.kpi-card .kpi-desc{color:var(--tx2);font-size:13px;line-height:1.5}
+
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .menu-toggle{display:block}
+  .content{padding:48px 20px 120px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .push-card{grid-template-columns:1fr;gap:6px}
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+section{animation:fadeUp .4s ease both}
+section:nth-child(2){animation-delay:.05s}
+section:nth-child(3){animation-delay:.1s}
+section:nth-child(4){animation-delay:.15s}
+section:nth-child(5){animation-delay:.2s}
+section:nth-child(6){animation-delay:.25s}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header" style="position:relative">
+    <div class="sidebar-logo">◆ LineApp × PMG</div>
+    <div class="sidebar-title">App Production Checklist</div>
+    <div class="sidebar-sub">ING Beats Silesia 2026 · v1.1</div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode"></button>
+  </div>
+  <nav class="sidebar-nav" id="nav">
+    <div class="nav-section"><div class="nav-section-label">Overview</div></div>
+    <a class="nav-item active" href="#overview" data-section="overview"><span class="nav-icon">◎</span>Overview &amp; timeline</a>
+    <a class="nav-item" href="#sukces" data-section="sukces"><span class="nav-icon">◉</span>Cele &amp; sukces</a>
+    <a class="nav-item" href="#pytania" data-section="pytania"><span class="nav-icon">?</span>Pytania do Pawła</a>
+    <a class="nav-item" href="#lineapp" data-section="lineapp"><span class="nav-icon">◆</span>Co robi LineApp</a>
+
+    <div class="nav-section"><div class="nav-section-label">Od PMG · T-14</div></div>
+    <a class="nav-item" href="#brand" data-section="brand"><span class="nav-icon">◆</span>Brand &amp; visual</a>
+    <a class="nav-item" href="#lineup" data-section="lineup"><span class="nav-icon">⊕</span>Lineup &amp; harmonogram</a>
+    <a class="nav-item" href="#mapa" data-section="mapa"><span class="nav-icon">◈</span>Mapa &amp; dojazd</a>
+    <a class="nav-item" href="#tickets" data-section="tickets"><span class="nav-icon">⛨</span>Tickets &amp; wejście</a>
+
+    <div class="nav-section"><div class="nav-section-label">Od PMG · przed launchem</div></div>
+    <a class="nav-item" href="#info" data-section="info"><span class="nav-icon">⊞</span>Plan informacyjny</a>
+    <a class="nav-item" href="#food" data-section="food"><span class="nav-icon">⊟</span>Food &amp; beverage</a>
+    <a class="nav-item" href="#tresci" data-section="tresci"><span class="nav-icon">✎</span>Treści edytorskie</a>
+    <a class="nav-item" href="#jezyki" data-section="jezyki"><span class="nav-icon">⌥</span>Języki</a>
+
+    <div class="nav-section"><div class="nav-section-label">Współpraca</div></div>
+    <a class="nav-item" href="#ing" data-section="ing"><span class="nav-icon">★</span>Współpraca z ING</a>
+    <a class="nav-item" href="#sponsors" data-section="sponsors"><span class="nav-icon">◇</span>Pozostali sponsorzy</a>
+    <a class="nav-item" href="#pushe" data-section="pushe"><span class="nav-icon">⚡</span>Plan pushy</a>
+
+    <div class="nav-section"><div class="nav-section-label">Legal &amp; konta</div></div>
+    <a class="nav-item" href="#legal" data-section="legal"><span class="nav-icon">⚖</span>Legal &amp; GDPR</a>
+    <a class="nav-item" href="#konta" data-section="konta"><span class="nav-icon">▲</span>Konta App Store / Play</a>
+
+    <div class="nav-section"><div class="nav-section-label">Operacja</div></div>
+    <a class="nav-item" href="#operacja" data-section="operacja"><span class="nav-icon">⚙</span>Dzień eventu</a>
+    <a class="nav-item" href="#live" data-section="live"><span class="nav-icon">⊛</span>Live content (in-event)</a>
+    <a class="nav-item" href="#bezpieczenstwo" data-section="bezpieczenstwo"><span class="nav-icon">⚠</span>Plan B &amp; safety</a>
+
+    <div class="nav-section"><div class="nav-section-label">Marketing apki</div></div>
+    <a class="nav-item" href="#marketing" data-section="marketing"><span class="nav-icon">◐</span>Strategia promocji</a>
+
+    <div class="nav-section"><div class="nav-section-label">Wrap-up</div></div>
+    <a class="nav-item" href="#post" data-section="post"><span class="nav-icon">✓</span>Po evencie</a>
+    <a class="nav-item" href="#format" data-section="format"><span class="nav-icon">⇆</span>Format dostarczania</a>
+  </nav>
+  <div class="sidebar-footer">
+    LineApp × CocoLab.pl<br>v1.1 · April 2026
+  </div>
+</aside>
+
+<main class="main">
+<div class="content" id="content">
+
+<!-- OVERVIEW -->
+<section id="overview" class="hero">
+  <div class="hero-badge">v1.1 · WORKING DRAFT</div>
+  <h1>ING Beats Silesia 2026</h1>
+  <p class="hero-desc">Lista wszystkiego, co potrzebujemy by zbudować aplikację mobilną w wymaganym oknie 2 tygodni. Trzy strony: <strong style="color:var(--blue)">PMG Group</strong> (organizator), <strong style="color:var(--ac)">LineApp</strong> (dostawca app), <strong style="color:var(--purple)">ING</strong> (sponsor tytularny). Każdy element ma owner'a i deadline.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-value ac">14</div><div class="stat-label">dni do app na storach</div></div>
+    <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">strony współpracy</div></div>
+    <div class="stat-card"><div class="stat-value red">8</div><div class="stat-label">blokery T-14</div></div>
+    <div class="stat-card"><div class="stat-value purple">7</div><div class="stat-label">pytania do Pawła</div></div>
+  </div>
+
+  <h3>Trzy strony, trzy zakresy</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Strona</th><th>Rola</th><th>Owner czego</th></tr></thead>
+      <tbody>
+        <tr><td><span class="owner-pill owner-pmg">PMG</span></td><td>Organizator festiwalu</td><td>Brand, lineup, mapa, content informacyjny, sponsorzy, tickets, marketing eventowy</td></tr>
+        <tr><td><span class="owner-pill owner-line">LINE</span></td><td>Dostawca app + media</td><td>Build, app icon, splash, logotypy scen, pushe, store submission, animacje promo, raporty</td></tr>
+        <tr><td><span class="owner-pill owner-ing">ING</span></td><td>Sponsor tytularny</td><td>Brand book ING, akceptacje brand managera, aktywacje sponsorskie</td></tr>
+        <tr><td><span class="owner-pill owner-joint">JOINT</span></td><td>Wspólnie</td><td>Onboarding decision, late-change process, KPI sukcesu, DPA</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Krytyczna ścieżka</h3>
+  <div class="timeline">
+    <div class="timeline-item crit">
+      <div class="timeline-date">Tydzień 1 · T-14 → T-7</div>
+      <div class="timeline-title">Blokery — bez tego nie zaczynamy buildu</div>
+      <div class="timeline-desc">Brand kit (wektory, fonty z licencją), final lineup z setami, mapa terenu w wektorze, decyzja o ticketach + opasce + cashless.</div>
+    </div>
+    <div class="timeline-item high">
+      <div class="timeline-date">Tydzień 2 · T-7 → T-2</div>
+      <div class="timeline-title">Treści, sponsorzy, legal</div>
+      <div class="timeline-desc">Plan informacyjny, FAQ (musi iść WCZEŚNIEJ), ING activations, DPA podpisana, privacy policy zaakceptowana.</div>
+    </div>
+    <div class="timeline-item med">
+      <div class="timeline-date">T-7 → T-2</div>
+      <div class="timeline-title">Store submission</div>
+      <div class="timeline-desc">App Store + Google Play — z perspektywy LineApp account, potem transfer na konto PMG / ING Beats po launchu.</div>
+    </div>
+    <div class="timeline-item ok">
+      <div class="timeline-date">T-3 → event → +7 dni</div>
+      <div class="timeline-title">Operacja, live content, marketing apki</div>
+      <div class="timeline-desc">SPOC 24/7, plan B pogodowy, push templates gotowe, codzienny daily-content drop (zdjęcia z dnia), survey post.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- CELE & SUKCES -->
+<section id="sukces">
+  <h2>Cele &amp; co znaczy sukces</h2>
+  <p class="section-intro">Bez ustalenia <strong>co znaczy sukces</strong> przy starcie projektu, raport po evencie nie ma do czego porównać. Robocie zadanie do uzgodnienia z Magdą / PMG — ustalmy KPI dla aplikacji oraz dla marketingu apki PRZED buildem.</p>
+
+  <div class="callout warn"><strong>Spotkanie do umówienia z Magdą / PMG:</strong> 60 min, definicja sukcesu z perspektywy PMG, ING, LineApp. Output: jeden Google Doc z liczbowymi KPI + co raportujemy co tydzień + co po evencie.</div>
+
+  <h3>Proponowane KPI (do dopracowania)</h3>
+
+  <div class="kpi-card">
+    <div class="kpi-name">Penetracja appki wśród ticket holderów</div>
+    <div class="kpi-target">target: 35% (rozsądne) / 50% (ambitne)</div>
+    <div class="kpi-desc">% uczestników z biletem, którzy pobrali app przed eventem. Mierzone: install attribution z mailingów, QR codes z biletów. Benchmark Pol'and'Rock 2024: ~32%.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-name">Daily Active Users w trakcie eventu</div>
+    <div class="kpi-target">target: ≥70% pobranych aktywnie używa min 1× dziennie</div>
+    <div class="kpi-desc">Pokazuje że appka jest faktycznie używana, a nie tylko zainstalowana z obowiązku.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-name">Push notification engagement rate</div>
+    <div class="kpi-target">target: open rate ≥30% (industry: 7-10%)</div>
+    <div class="kpi-desc">Festiwalowe pushe mają wyższy engagement niż produkty SaaS. Pokazuje, że content jest istotny.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-name">Sponsor brand visibility (ING)</div>
+    <div class="kpi-target">target: 90%+ unique users zobaczy ING brand min 3× w app</div>
+    <div class="kpi-desc">Splash + persistent header + dedicated section. Raport dla ING: liczba impresji, CTR, czas spędzony na ich aktywacjach.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-name">NPS po evencie</div>
+    <div class="kpi-target">target: NPS ≥50 (excellent dla event app)</div>
+    <div class="kpi-desc">Mierzone w post-event survey. Korelacja z chęcią powrotu na ING Beats 2027.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-name">Marketing apki — koszt instalacji</div>
+    <div class="kpi-target">target: do ustalenia z PMG/Magdą</div>
+    <div class="kpi-desc">Jeśli prowadzimy płatną promocję apki, jakie CPI jest akceptowalne dla PMG / ING. Bez tego nie wiemy ile możemy zainwestować w ads.</div>
+  </div>
+
+  <h3>Pytania do uzgodnienia</h3>
+  <ul class="checklist">
+    <li>Czy <strong>celem jest ekonomia</strong> (mniej wydruku, mniej supportu) czy <strong>doświadczenie</strong> (lepsze UX dla uczestników)?</li>
+    <li>Co stanowi <strong>winning report</strong> dla ING po evencie?</li>
+    <li>Czy są <strong>sponsorskie KPI</strong> kontraktowe (np. minimum impresji)?</li>
+    <li>Czy mierzymy <strong>NPS dla aplikacji osobno</strong> czy razem z całością festiwalu?</li>
+    <li>Czy aplikacja ma być <strong>retention asset</strong> na 2027 (push + content cały rok) czy tylko event-only?</li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PYTANIA -->
+<section id="pytania">
+  <h2>Pytania do Pawła (open issues)</h2>
+  <p class="section-intro">Lista rzeczy z tej checklisty, które wymagają decyzji technicznej / produktowej Pawła przed wysłaniem briefu do PMG.</p>
+
+  <div class="callout pawel"><strong>Status:</strong> <span class="badge badge-pawel">Q-OPEN</span> = pytanie otwarte / <span class="badge badge-ok">Q-DONE</span> = zaakceptowane</div>
+
+  <div class="qcard">
+    <div class="qnum">1</div>
+    <div class="qbody"><strong>Typografia — co dokładnie wymagamy od PMG?</strong>
+    <p>Czy wystarczy nazwa fontu i sami licencjonujemy embed w app, czy żądamy plików .otf/.ttf z licencją od PMG? Festiwal może używać custom font bez licencji mobile = wymaga renegocjacji z foundry, co dla PMG jest niespodzianką.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">2</div>
+    <div class="qbody"><strong>Rozdzielczość zdjęć artystów</strong>
+    <p>Jakie minimum technicznie wymagamy? Square + landscape min 2000px? Czy mamy automatyczny resize w pipeline'ie i przyjmiemy cokolwiek ≥1500px? Wpływa na jakość vs łatwość dostarczenia.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">3</div>
+    <div class="qbody"><strong>Plan piętra (indoor venues)</strong>
+    <p>Czy ING Beats Silesia jest 100% outdoor czy multi-venue (kluby, hala)? Jeśli indoor — potrzebujemy planów piętra w SVG. Jeśli outdoor only — pomijamy.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">4</div>
+    <div class="qbody"><strong>Tickets — cały blok do obgadania</strong>
+    <p>Vendor biletowy, opaski, cashless wallet, integracja API/PDF — wszystkie te decyzje mają fundamentalny wpływ na architekturę. Pawle prosimy decyzje preferred / acceptable / no-go.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">5</div>
+    <div class="qbody"><strong>Age-gate &amp; legal compliance — czy w ogóle się zajmujemy?</strong>
+    <p>Czy LineApp dostarcza age-gate, cookie consent, GDPR compliance jako część usługi, czy to PMG/ING ma swoich prawników? Wpływa na zakres prac i odpowiedzialność.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">6</div>
+    <div class="qbody"><strong>Privacy policy administrator</strong>
+    <p>Zakładam <strong>PMG Group</strong> jako administrator danych. Czy joint controllers (PMG + LineApp) czy PMG sole + LineApp = procesor? DPA template gotowy.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">7</div>
+    <div class="qbody"><strong>Plan piętra / map indoor — jak rozumiemy ING Beats Silesia?</strong>
+    <p>Outdoor festiwal czy multi-venue (Spodek + kluby)? To zmienia kompletnie sposób mapy w app.</p></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LINEAPP DELIVERABLES -->
+<section id="lineapp">
+  <h2>Co robi LineApp (po naszej stronie)</h2>
+  <p class="section-intro">Lista rzeczy, których <strong>nie wymagamy od PMG</strong> — robimy je sami na podstawie ich brand kitu. To istotne, żeby PMG nie tracił czasu na to, co my dostarczymy.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Co dostarczamy</th><th>Deadline</th></tr></thead>
+      <tbody>
+        <tr><td>App icon</td><td>1024×1024 + wszystkie wymagane wymiary iOS/Android, na bazie logo PMG</td><td class="deadline">T-7</td></tr>
+        <tr><td>Splash screen</td><td>Wszystkie aspect ratios, animowany jeśli się zmieścimy w czasie</td><td class="deadline">T-7</td></tr>
+        <tr><td>Logotypy / identyfikacja scen w app</td><td>Generujemy z brand kitu (kolor + nazwa sceny + ew. ikona)</td><td class="deadline">T-10</td></tr>
+        <tr><td>App description (PL + EN) na storey</td><td>Short + long, keywords, kategoria</td><td class="deadline">T-7</td></tr>
+        <tr><td>App Store screenshots (5-8)</td><td>Generujemy z buildu, PMG akceptuje</td><td class="deadline">T-7</td></tr>
+        <tr><td>QR code do druku</td><td>PDF print-ready z deep linkiem</td><td class="deadline">T-7</td></tr>
+        <tr><td>Plan pushy + szablony ad-hoc</td><td>Pełen plan + treści (PMG akceptuje, my wysyłamy)</td><td class="deadline">T-5</td></tr>
+        <tr><td>Conflict matrix (ulubionych setów)</td><td>Generowane z gridu lineupu</td><td class="deadline">T-7</td></tr>
+        <tr><td>Linki do streamingów per artysta</td><td>Spotify / YouTube / IG — sami pobieramy z API, nie obciążamy PMG</td><td class="deadline">T-5</td></tr>
+        <tr><td>Promo video / animacje (do uzgodnienia)</td><td>Krótkie animowane formaty do social PMG (sekcja Marketing)</td><td class="deadline">T-7</td></tr>
+        <tr><td>Sponsor reporting dashboard</td><td>Live dashboard impresji / CTR podczas eventu + raport końcowy</td><td class="deadline">+7 dni</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout ok"><strong>Zasada:</strong> wszystko, co da się wygenerować z brand kitu PMG → robi LineApp. Wszystko, co wymaga decyzji biznesowej / prawnej / sponsorskiej → PMG.</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- BRAND -->
+<section id="brand">
+  <h2>Brand &amp; visual kit</h2>
+  <p class="section-intro">Pakiet identyfikacji wizualnej festiwalu w formatach edytowalnych. ING ma rygorystyczny brand book — logotypy bankowe wymagają zachowania proporcji, kolorów Pantone i marginesów ochronnych. Bez tego launch nie jest możliwy.</p>
+
+  <div class="callout warn"><strong>ING brand book:</strong> wszystkie logotypy ING + ING Beats wymagają akceptacji brand managera ING. Zakładamy 48h na każdą rundę feedbacku — patrz sekcja <a href="#ing" style="color:var(--ac)">Współpraca z ING</a>.</div>
+
+  <h3>Co potrzebujemy od PMG</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Logo festiwalu — pełne</td><td>SVG + AI/EPS, warianty: poziomy, pionowy, monogram, dark/light bg</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Logo ING + ING Beats z brand bookiem</td><td>Vector + PDF guidelines, marginesy ochronne, paleta Pantone</td><td class="owner"><span class="owner-pill owner-ing">ING</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Logotypy partnerów / sponsorów</td><td>Vector, lista z hierarchią (tier 1/2/3) — patrz sekcja Sponsorzy</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Paleta kolorów</td><td>HEX + RGB + Pantone, primary / secondary / accent + zasady użycia</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Typografia <span class="badge badge-pawel">Q-1</span></td><td>Pliki + licencja na embed mobile <em>(zakres do ustalenia z Pawłem)</em></td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Brand guidelines PDF</td><td>Pełny styleguide festiwalu, jeśli istnieje</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Hero / key visual edycji 2026</td><td>Min 3000px szer., warianty pion/poziom</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Co robi LineApp</h3>
+  <p style="color:var(--tx2);font-size:13px">App icon, splash screen, logotypy scen — generujemy z brand kitu PMG. Pełna lista w sekcji <a href="#lineapp" style="color:var(--ac)">Co robi LineApp</a>.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LINEUP -->
+<section id="lineup">
+  <h2>Lineup &amp; harmonogram</h2>
+  <p class="section-intro">Najważniejsza dana w aplikacji. Każda zmiana = ręczna aktualizacja w CMS + decyzja o pushu. Drugi-najważniejszy aspekt: <strong>śledzimy w czasie rzeczywistym start każdego setu</strong> — to umożliwia dokładne pushe i live signals dla użytkownika.</p>
+
+  <h3>Final lineup — co dostarcza PMG</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Pełna lista artystów (final)</td><td>Google Sheets, PMG nadaje uprawnienia edycji 1-2 osobom</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Per artysta — metadata</td><td>Nazwa, kraj, gatunek, długość setu</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Per artysta — zdjęcia (×2) <span class="badge badge-pawel">Q-2</span></td><td>Square + landscape, prawa do publikacji w app <em>(rozdzielczość do ustalenia z Pawłem)</em></td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Per artysta — bio</td><td>PL + EN, max 600 znaków, neutralny ton</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Lista scen + ich nazwy</td><td>Tekstowa lista (main / chamber / club / sponsor stage) + opis</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Grid setów (timetable)</td><td>CSV: artysta → scena → start → koniec, ISO 8601 strefa czasowa</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Co to znaczy „final lineup z procesem update'ów":</strong> nie chcemy lineup'u który zmienia się w 3 miejscach (Slack + email + Google Doc). Jeden Google Sheet, jeden właściciel po stronie PMG, my widzimy zmiany na bieżąco. Każda edycja = timestamp = wiemy czy to nowa wersja.
+  </div>
+
+  <h3>Live tracking setów (kluczowa funkcja)</h3>
+  <p style="color:var(--tx2);font-size:14px;margin-bottom:12px">Chcemy mieć w trakcie eventu <strong>czujkę startu każdego koncertu</strong> — żeby:</p>
+  <ul class="checklist">
+    <li>Wysyłać <strong>automatyczny push</strong> 30 min przed setem (na podstawie ulubionych)</li>
+    <li>Wysyłać <strong>push „zaczyna się teraz"</strong> w momencie startu</li>
+    <li>Pokazywać w app live indicator „GRA TERAZ" przy aktywnych setach</li>
+    <li>Mieć info o <strong>opóźnieniach / przesunięciach</strong> — kto je wprowadza, kanałem</li>
+    <li>Wszystkie pushe wysyła <strong>LineApp</strong> (po zatwierdzeniu treści przez PMG SPOC)</li>
+  </ul>
+
+  <h3>Zasady late-change (do ustalenia z PMG)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Sytuacja</th><th>Kto zgłasza</th><th>Kanał</th><th>SLA</th></tr></thead>
+      <tbody>
+        <tr><td>Cancel artysty / replacement (T-X dni)</td><td>SPOC PMG</td><td>Slack + edycja Sheetsa</td><td>1h</td></tr>
+        <tr><td>Przesunięcie czasu setu</td><td>SPOC PMG / production lead</td><td>Slack + edycja Sheetsa</td><td>15 min</td></tr>
+        <tr><td>Zmiana sceny (force majeure)</td><td>Production lead PMG</td><td>Slack + telefon do nas</td><td>5 min</td></tr>
+        <tr><td>Sygnał „set zaczyna się teraz"</td><td>Stage manager → centralny dashboard</td><td>Manualny przycisk w naszym CMS / API</td><td>real-time</td></tr>
+        <tr><td>Sygnał „set się skończył"</td><td>Auto-detect po końcu czasu lub manual</td><td>System automatic + override</td><td>real-time</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Bonus — engagement</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Element</th><th>Owner</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Curated Spotify playlist z lineupem</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td><span class="badge badge-med">MOŻE</span></td></tr>
+        <tr><td>Welcome video / teaser (15-30 sek vertical)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td><span class="badge badge-med">MOŻE</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout"><strong>Linki do streamingów (Spotify / YT / IG):</strong> nie wymagamy od PMG — sami pobieramy z publicznych API per artysta na podstawie nazwy.</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- MAPA -->
+<section id="mapa">
+  <h2>Mapa terenu &amp; dojazd</h2>
+  <p class="section-intro">Mapa = drugi-najczęściej-używany ekran (po lineupie). Plan w wektorze + GPS POI = pinpoint navigation. Dojazd to osobny moduł — pomagamy użytkownikowi wybrać sposób, dostarczamy konkretne info per kanał.</p>
+
+  <h3>Plan terenu i POI</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Plan terenu — wektor</td><td>SVG / AI, layery: sceny, gastro, toi-toi, medical, info, bagażownia, ATM, woda, akredytacje</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Współrzędne GPS</td><td>Lat/lng dla każdego POI, format CSV</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Plan piętra (jeśli indoor) <span class="badge badge-pawel">Q-3</span></td><td>SVG planów każdej lokalizacji <em>(zależy czy multi-venue)</em></td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Wjazdy / wejścia / kasy</td><td>Lokalizacja + godziny + typ (VIP / general / press)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Strefy dla niepełnosprawnych</td><td>Lokalizacja + opis (rampa / podjazd / sensory-friendly)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Moduł dojazdu — „Jak dojeżdżasz?"</h3>
+  <p style="color:var(--tx2);font-size:14px;margin-bottom:12px">Pomysł: użytkownik wybiera sposób dojazdu (auto / publiczny / rower-hulajnoga / Uber-Bolt) i dostaje <strong>tylko relevantne info dla swojego kanału</strong>. Bez infodumpu.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Kanał dojazdu</th><th>Co pokazujemy</th><th>Owner danych</th></tr></thead>
+      <tbody>
+        <tr><td>Autem</td><td>Parkingi + ceny + GPS, P&amp;R, info policji o utrudnieniach, alternatywne dojazdy</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span> + policja feed</td></tr>
+        <tr><td>Komunikacja miejska</td><td>Najbliższe przystanki tramwaju/autobusu, rozkład, linie, dodatkowe kursy festiwalowe</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td></tr>
+        <tr><td>Rower / hulajnoga</td><td>Lokalizacje stacji partnerów (Veturilo / Bolt / Lime), parkingi rowerowe, ścieżki</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span> (lokalizacje partnerów)</td></tr>
+        <tr><td>Uber / Bolt / FreeNow</td><td><strong>Współpraca?</strong> — czy mamy partnerstwo, kod promocyjny, dedykowany pickup spot</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td></tr>
+        <tr><td>Pieszo / chodzę z hotelu</td><td>Bezpieczne trasy, oświetlone ulice, info security</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout"><strong>Pytanie do PMG:</strong> czy macie partnerstwa z Uber / Bolt? Jeśli tak — wynegocjujmy promo code, dedykowany pickup spot, in-app deeplink. Win-win z punktu uczestnika i sponsoring opportunity dla nich.</div>
+
+  <h3>Live info od policji / drogówki</h3>
+  <ul class="checklist">
+    <li>Czy mamy <strong>kontakt z policją Katowice</strong> dla feedu o utrudnieniach drogowych?</li>
+    <li>Komunikat „Ulica X zamknięta — alt: Y" w live news feed app</li>
+    <li>Push do zmotoryzowanych (segmentowany na podstawie wybranego kanału dojazdu)</li>
+    <li>Owner: PMG + production / security partner</li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TICKETS -->
+<section id="tickets">
+  <h2>Tickets &amp; wejście <span class="badge badge-pawel">Q-4</span></h2>
+  <p class="section-intro">Cały blok decyzji technicznych do obgadania z Pawłem przed briefem do PMG. Decyzje fundamentalnie wpływają na architekturę aplikacji i timeline buildu.</p>
+
+  <div class="callout pawel"><strong>Status:</strong> wszystkie elementy w tej sekcji są pre-decisional. Po sesji z Pawłem aktualizujemy do v1.2 z konkretnymi wymaganiami do PMG.</div>
+
+  <h3>Decyzje do podjęcia</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Decyzja</th><th>Opcje</th><th>Wpływ na build</th></tr></thead>
+      <tbody>
+        <tr><td>Vendor biletowy</td><td>Going / Eventim / Bilety24 / własny PMG</td><td>API integration time</td></tr>
+        <tr><td>Linkujemy bilet z kontem w app?</td><td>Tak (QR scan wewnątrz app) / Nie (bilet zewnętrzny)</td><td>Auth flow + scan UI</td></tr>
+        <tr><td>Opaska RFID/NFC linkuje z app?</td><td>Tak (bind przy registracji) / Nie / Zewnętrzna</td><td>Hardware integration</td></tr>
+        <tr><td>Cashless wallet w app?</td><td>Tak (in-app wallet) / Tylko view balance / Zewnętrzny</td><td>Payment integration + PCI</td></tr>
+        <tr><td>Top-up cashless w app?</td><td>Tak (Stripe/PayU) / Tylko offline / Brak</td><td>Payment processor + onboarding</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="color:var(--tx2);font-size:13px">Po decyzji — aktualizujemy listę do PMG z konkretnym brief'em (vendor, format API, deadlines, kontakty).</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- INFO -->
+<section id="info">
+  <h2>Plan informacyjny</h2>
+  <p class="section-intro">Wszystko co użytkownik musi wiedzieć, w jednym Google Docu, edytowanym przez jedną osobę. Największy spam pytań na Messengerze przed eventem — appka zbiera odpowiedzi w jedno miejsce.</p>
+
+  <div class="callout warn"><strong>FAQ musi iść WCZEŚNIEJ niż reszta.</strong> Nie T-7 do T-2 — chcemy mieć FAQ <strong>na T-13</strong>, żeby promować app jako „pełna informacja zanim przyjedziesz". To też potrzebne do mailingu od PMG.</div>
+
+  <h3>Treści (PL + EN)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:50%">Sekcja</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>FAQ — minimum 30 pytań</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Regulamin imprezy + skrót w app</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Co można / nie można wnieść</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Polityka wieku, dzieci, zwierząt</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Płatności (cashless / gotówka / top-up)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Bagażownia — godziny, cena, lokalizacja</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Strefa palenia, alkohol, narkotyki — komunikat</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Lost &amp; found — proces + lokalizacja</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Punkt medyczny — lokalizacja, telefon</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Polityka foto / video, akredytacje prasowe</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Wi-Fi info (SSID, hasło, zasięg)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-3</td><td><span class="badge badge-med">MED</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout"><strong>Tip:</strong> niech PMG otworzy DM-y / maile z poprzednich edycji i wyciągnie 30 najczęstszych pytań od ticket holderów. To 80% redukcji supportu w trakcie eventu.</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FOOD -->
+<section id="food">
+  <h2>Food &amp; beverage</h2>
+  <p class="section-intro">Lista food trucków / barów z lokalizacją na mapie i oznaczeniami diet. Drugi-najczęściej-szukany content po lineupie. Ceny opcjonalne — niektórzy operatorzy nie chcą ich ujawniać.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Lista wystawców gastro</td><td>CSV: nazwa, kuchnia, opis 1-zdaniowy, logo</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Menu + ceny przykładowe</td><td>Opcjonalnie</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-med">MED</span></td></tr>
+        <tr><td>Oznaczenia diet (vege / vegan / GF / halal)</td><td>Flagi per wystawca</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Lokalizacje na mapie</td><td>Pinpoint na planie terenu</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-5</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Strefy chill / VIP / loża sponsorska</td><td>Co i gdzie, dla kogo dostępne</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- TRESCI -->
+<section id="tresci">
+  <h2>Treści edytorskie</h2>
+  <p class="section-intro">Welcome screen, news feed, „before you go" tips. Z naszego LineApp SOUL: <strong>zero learning curve, obvious od pierwszego spojrzenia</strong>. Onboarding będzie minimalny.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Welcome screen / about copy</td><td>PL + EN, ~300 znaków</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>News / aktualności feed</td><td>Kto pisze podczas eventu, częstotliwość, akceptacja</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-5</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>„Before you go" tips</td><td>10 punktów do wyświetlenia po pierwszym otwarciu</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>App Store opis (PL + EN)</td><td>Krótki + długi opis, screenshots captions</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- JEZYKI -->
+<section id="jezyki">
+  <h2>Języki &amp; tłumaczenia</h2>
+  <p class="section-intro">Rekomendacja: <strong>3 języki — PL, EN, UA</strong>. Katowice ma duży udział mieszkańców z Ukrainy, dodanie UA = niski koszt + duży gain w community. Decyzja przed T-10.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>PL — wszystkie treści (baseline)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>EN — wszystkie treści</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>UA — rekomendacja</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-high">REKOM</span></td></tr>
+        <tr><td>Decyzja PMG: 2 czy 3 języki</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ING -->
+<section id="ing">
+  <h2>Współpraca z ING (osobny temat)</h2>
+  <p class="section-intro">ING jest sponsorem tytularnym — to nie jest kolejny banner w stopce. Cała współpraca z ING wymaga osobnego planu: kontraktowe widoczności, brand book compliance, akceptacje, aktywacje, raport zwrotny po evencie.</p>
+
+  <div class="callout warn"><strong>Otwarte pytania do PMG / ING:</strong> jakie konkretnie aktywacje ING chce w app? Co jest kontraktowe (w umowie sponsorskiej), a co opcjonalne? Kto akceptuje materiały po stronie ING (1 brand manager czy 3 osoby)?</div>
+
+  <h3>Co dokładnie robimy z ING — do uzgodnienia</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Obszar</th><th>Pytanie do ING</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Brand visibility kontraktowy</td><td>Jakie miejsca są obowiązkowe? (splash, header, dedicated section?)</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Aktywacje sponsorskie</td><td>Konkurs / quiz / kupon ING? Mini-strona ze stoiskiem ING na festiwalu?</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Współpraca z ING produktem</td><td>Czy promujemy ING konto / kartę / app w festiwalowej app? Jakie CTA?</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Brand book ING</td><td>Czy ING dostarcza guidelines, czy działamy z istniejących PDFów?</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Akceptacje brand managera</td><td>Kto i jaki SLA na akceptacje materiałów?</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Raport po evencie dla ING</td><td>Co konkretnie w raporcie? (impresje, CTR, NPS, brand recall?)</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>ING pre-event marketing</td><td>Czy ING promuje app w swoich kanałach (Moje ING, ING social, mailing)?</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>ING jako publisher na storey?</td><td>Decyzja: konto ING / PMG / LineApp — patrz sekcja Konta App Store</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout"><strong>Następny krok:</strong> spotkanie LineApp + PMG + ING brand manager. Output: lista konkretnych aktywacji + akceptacji + raport spec.</div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- SPONSORS -->
+<section id="sponsors">
+  <h2>Pozostali sponsorzy &amp; komercja</h2>
+  <p class="section-intro">Sponsorzy poza ING — czy są i jak wyglądają? Hierarchia, widoczności, aktywacje. PMG dostarcza listę i kontrakty per sponsor.</p>
+
+  <div class="callout warn"><strong>Pytanie do PMG:</strong> jacy są sponsorzy poza ING? Strategiczni partnerzy (tier 2)? Mediowi / barterowi (tier 3)? Aktywacje per sponsor?</div>
+
+  <h3>Hierarchia &amp; widoczność</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Tier 2 partnerzy strategiczni</td><td>Logotypy + opis + tier (TBC z PMG)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Tier 3 partnerzy mediowi</td><td>Logo + nazwa</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Per-sponsor mini-strona</td><td>Logo, opis, CTA (link / kupon / mapa stoiska)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Aktywacje (kupony / quizy / konkursy)</td><td>Mechanika + nagrody + reguły</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-med">MED</span></td></tr>
+        <tr><td>Custom banery / placements</td><td>Spec wymiarów + dostarczone kreacje</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-5</td><td><span class="badge badge-high">HIGH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Co LineApp proponuje sponsorom</h3>
+  <ul class="checklist">
+    <li><strong>Live dashboard</strong> impresji / CTR podczas eventu — sponsor widzi ROI w czasie rzeczywistym</li>
+    <li><strong>Geo / demografia widzów</strong> (zagregowane, GDPR-safe)</li>
+    <li><strong>Interactive activations</strong> w app — quiz / konkurs / kupon QR z trackingiem</li>
+    <li><strong>Push moment marketing</strong> — np. „rabat 30% na lemoniadę przez 30 min" u sponsora gastro</li>
+    <li><strong>Per-sponsor raport końcowy</strong> w PDF + Slides z metrykami</li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PUSHE -->
+<section id="pushe">
+  <h2>Plan pushy (LineApp robi)</h2>
+  <p class="section-intro">Cały plan pushy — szablony, treści, harmonogram, segmentacja — przygotowuje LineApp. PMG akceptuje treści, my wysyłamy. <strong>Frequency cap: max 2-3 / dzień</strong> — inaczej ludzie wyłączą notyfikacje.</p>
+
+  <div class="callout"><strong>Owner:</strong> <span class="owner-pill owner-line">LINE</span> przygotowuje, <span class="owner-pill owner-pmg">PMG</span> akceptuje treści (dwu-osobowy proces przed broadcastem), LineApp wysyła.</div>
+
+  <h3>Zaplanowane pushe (template draft)</h3>
+
+  <div class="push-card">
+    <div class="push-when">T-7 dni</div>
+    <div class="push-content">
+      <div class="push-title">Pre-event reminder</div>
+      <div class="push-body">Aktywuje uczestników, którzy zainstalowali wcześniej.</div>
+      <div class="push-template">„Tydzień do ING Beats. Zobacz pełny lineup i ułóż swój plan."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">T-1 dzień</div>
+    <div class="push-content">
+      <div class="push-title">Day-before checklist</div>
+      <div class="push-body">Co zabrać, godziny bram, pogoda, mapa.</div>
+      <div class="push-template">„Jutro się widzimy. Sprawdź co zabrać i o której bramy."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">Day 1 · 08:00</div>
+    <div class="push-content">
+      <div class="push-title">Wakeup / harmonogram</div>
+      <div class="push-body">Pierwsza komunikacja, link do harmonogramu.</div>
+      <div class="push-template">„Bramy o 14:00. Zobacz dziś na scenach."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">Day 1 · 13:30</div>
+    <div class="push-content">
+      <div class="push-title">Bramy otwarte</div>
+      <div class="push-body">Trigger dla early arrivals.</div>
+      <div class="push-template">„Bramy otwarte. Do zobaczenia."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">30 min przed setem</div>
+    <div class="push-content">
+      <div class="push-title">Reminder ulubionego artysty</div>
+      <div class="push-body">Dynamiczny per użytkownik, na podstawie favorites.</div>
+      <div class="push-template">„{{artist_name}} za 30 minut na {{stage_name}}."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">START SETU (live)</div>
+    <div class="push-content">
+      <div class="push-title">Set się zaczyna teraz</div>
+      <div class="push-body"><strong>Nowy:</strong> w momencie rzeczywistego startu setu (sygnał ze stage managera) — push tylko do tych, co dodali do favorites.</div>
+      <div class="push-template">„{{artist_name}} gra teraz na {{stage_name}}."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">Day end · 23:30</div>
+    <div class="push-content">
+      <div class="push-title">Wrap-up dnia + jutro</div>
+      <div class="push-body">Podziękowanie + zapowiedź dnia 2 + galeria z dnia (sekcja Live content).</div>
+      <div class="push-template">„Dziękujemy za pierwszy dzień. Zobacz galerię. Jutro startujemy o {{time}}."</div>
+    </div>
+  </div>
+
+  <div class="push-card">
+    <div class="push-when">Last day · evening</div>
+    <div class="push-content">
+      <div class="push-title">Survey + zdjęcia</div>
+      <div class="push-body">NPS + 3 open questions.</div>
+      <div class="push-template">„Daj znać jak było — 60 sek. Galeria dostępna w środę."</div>
+    </div>
+  </div>
+
+  <h3>Szablony ad-hoc</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Sytuacja</th><th>Szablon</th><th>Kto akceptuje</th></tr></thead>
+      <tbody>
+        <tr><td>Zmiana setu</td><td>„Zmiana w harmonogramie: {{artist}} → {{new_time}} na {{stage}}."</td><td>SPOC PMG + 1</td></tr>
+        <tr><td>Pogoda / przerwa</td><td>„Przerwa techniczna do {{time}}. Schronienie: {{location}}."</td><td>SPOC + production</td></tr>
+        <tr><td>Ostrzeżenie bezpieczeństwa</td><td>„Prosimy unikać {{strefa}}. Sytuacja kontrolowana."</td><td>SPOC + Security</td></tr>
+        <tr><td>Zaginione dziecko</td><td><em>Wewnętrzny kanał, NIE broadcast</em></td><td>Security only</td></tr>
+        <tr><td>Geo-fence po opuszczeniu terenu</td><td>„Dzięki za dziś. Bezpiecznej drogi."</td><td>Auto</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Obowiązki sponsorskie w pushach</h3>
+  <p style="color:var(--tx2);font-size:13px">Pytanie do PMG: czy mamy <strong>kontraktowe pushe sponsorskie</strong> do dostarczenia? Np. „2× dziennie wzmianka ING" lub „push z aktywacją sponsorską". Bez tego nie wiemy, czy nasze 2-3 pushe na dzień się mieści w obowiązkach.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LEGAL -->
+<section id="legal">
+  <h2>Legal &amp; GDPR</h2>
+  <p class="section-intro">Zbieranie danych użytkowników w app + sponsoring ING = poważne wymagania compliance. DPA między LineApp a PMG MUSI być podpisana przed launchem.</p>
+
+  <div class="callout crit"><strong>Bez podpisanej DPA nie publikujemy aplikacji.</strong> Template DPA dostarcza LineApp → prawnik PMG akceptuje → podpisujemy. Zakładamy 5-7 dni na proces.</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Privacy policy PL + EN</td><td>Administrator danych: <strong>PMG Group</strong>. LineApp jako processor.</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Terms of service</td><td>Warunki korzystania z aplikacji</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>DPA (umowa powierzenia)</td><td>Template LineApp → prawnik PMG → podpis obu</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Zgody marketingowe</td><td>Treść checkboxa do akceptacji prawnika PMG</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Cookie / tracking consent</td><td>Banner zgodny z RODO, jeśli analytics</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Age-gate <span class="badge badge-pawel">Q-5</span></td><td><em>Pytanie do Pawła: czy LineApp obsługuje age-gate i compliance?</em></td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-10</td><td><span class="badge badge-info">TBD</span></td></tr>
+        <tr><td>Plan retencji danych</td><td>Usunięcie / anonimizacja po 90 dniach</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- KONTA -->
+<section id="konta">
+  <h2>Konta App Store / Google Play</h2>
+  <p class="section-intro">Decyzja: <strong>PMG Group będzie publisherem</strong> aplikacji długoterminowo. Nasze podejście: LineApp koduje i publikuje na swoim koncie (zero ryzyka opóźnień), potem transferujemy ownership na konto PMG po stabilnym launchu.</p>
+
+  <div class="callout warn"><strong>Plan w 3 krokach:</strong> (1) LineApp publikuje, (2) PMG zakłada konta storey, (3) transferujemy własność. To minimalizuje ryzyko opóźnień Apple review przez nowe konto.</div>
+
+  <h3>Krok 1 — LineApp publikuje (T-14 do T-2)</h3>
+  <ul class="checklist">
+    <li>App Store Connect: konto LineApp (już mamy, aktywne)</li>
+    <li>Google Play Console: konto LineApp (już mamy, aktywne)</li>
+    <li>App publikujemy pod naszym wydawcą — bez czekania na założenie kont PMG</li>
+    <li>Apple review SLA: 24-48h, mamy bufor</li>
+  </ul>
+
+  <h3>Krok 2 — PMG zakłada własne konta (równolegle, T-14 do T-7)</h3>
+  <p style="color:var(--tx2);font-size:13px;margin-bottom:8px">Robocie dostarcza krok-po-kroku PMG, my pomagamy w procesie. <strong>Potrzebny od PMG:</strong> dedykowany email administracyjny (np. <code class="inline-code">apps@pmg-group.pl</code>) — niech nie używają osobistego maila kogoś z teamu.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Krok</th><th>Apple App Store</th><th>Google Play</th></tr></thead>
+      <tbody>
+        <tr><td>1. Email administracyjny</td><td>Dedykowany Apple ID dla firmy</td><td>Dedykowany Google account</td></tr>
+        <tr><td>2. Verification firmy</td><td>D-U-N-S Number + verification call (1-2 tyg!)</td><td>Verification firmy + KRS</td></tr>
+        <tr><td>3. Opłata roczna</td><td>$99/rok (Apple Developer Program — Organization)</td><td>$25 jednorazowo</td></tr>
+        <tr><td>4. Tax / banking</td><td>Tax forms (W-8BEN-E dla PL)</td><td>Tax info + bank account</td></tr>
+        <tr><td>5. Agreement signing</td><td>Paid Apps Agreement</td><td>Distribution Agreement</td></tr>
+        <tr><td>Czas total</td><td>2-3 tygodnie</td><td>3-7 dni</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout"><strong>Apple D-U-N-S Number:</strong> jeśli PMG nie ma D-U-N-S — proces zajmuje 5 dni roboczych dodatkowo (Dun &amp; Bradstreet). Można uruchomić od razu, NA WCZORAJ — niech PMG rusza ten proces nawet zanim podpiszemy DPA.</p>
+</div>
+
+  <h3>Krok 3 — Transfer ownership (po stabilnym launchu)</h3>
+  <ul class="checklist">
+    <li>App Store: <strong>App Transfer</strong> — formalna procedura, transfer ownership do PMG account</li>
+    <li>Google Play: <strong>Transfer App</strong> — można w ciągu 24h jeśli oba konta mają verified merchant status</li>
+    <li>Czas: 7-14 dni od decyzji o transferze</li>
+    <li>App nie jest re-uploadowana, użytkownicy nie tracą instalacji</li>
+    <li>PMG przejmuje 100% ownership: revenue (jeśli paid), reviews, analytics</li>
+  </ul>
+
+  <div class="callout ok"><strong>Co dostarcza PMG by ruszyć:</strong>
+    <ol style="margin:8px 0;padding-left:24px">
+      <li>Dedykowany email administracyjny (np. apps@pmg-group.pl)</li>
+      <li>D-U-N-S Number (lub zaczynają proces uzyskania)</li>
+      <li>KRS PMG Group + dane bankowe firmy</li>
+      <li>1 osoba odpowiedzialna za konta (Account Holder)</li>
+    </ol>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- OPERACJA -->
+<section id="operacja">
+  <h2>Dzień eventu — operacja</h2>
+  <p class="section-intro">Ostatni tydzień + dni eventu — najwięcej dramy. Bez SPOC po stronie PMG i jasnej macierzy akceptacji decyzje stoją 6h. Tu definiujemy proces.</p>
+
+  <h3>Single Point of Contact (SPOC)</h3>
+  <ul class="checklist">
+    <li><strong>Jedna osoba decyzyjna</strong> po stronie PMG — nie komitet</li>
+    <li><strong>Telefon 24/7</strong> podczas eventu, po obu stronach (LineApp + PMG)</li>
+    <li><strong>Backup contact</strong> jeśli SPOC niedostępny</li>
+    <li><strong>Slack/WhatsApp grupa:</strong> my + SPOC + 1-2 osoby techniczne PMG</li>
+    <li><strong>Daily standup w ostatnim tygodniu</strong> — 15 min, codziennie</li>
+  </ul>
+
+  <h3>Macierz akceptacji</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Co</th><th>Akceptuje</th><th>Czas reakcji</th></tr></thead>
+      <tbody>
+        <tr><td>Zmiana lineupu (artysta cancel / replacement)</td><td>SPOC PMG</td><td>1h</td></tr>
+        <tr><td>Treść pusha eventowego</td><td>SPOC + 1 osoba (dwu-osobowa)</td><td>15 min</td></tr>
+        <tr><td>Zmiana banera sponsorskiego</td><td>SPOC + brand manager ING</td><td>4h (ING SLA)</td></tr>
+        <tr><td>Hotfix krytyczny w app</td><td>LineApp tech lead → SPOC info</td><td>asap</td></tr>
+        <tr><td>Push „zaginione dziecko" / safety</td><td>Security + SPOC</td><td>natychmiast</td></tr>
+        <tr><td>Sygnał „set zaczyna się teraz"</td><td>Stage manager (przycisk w CMS)</td><td>real-time</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- LIVE CONTENT -->
+<section id="live">
+  <h2>Live content (in-event)</h2>
+  <p class="section-intro">Zdjęcia z dnia, daily content drop, micro-stories — appka żyje w trakcie eventu, nie tylko przed. To duża wartość dodana dla użytkownika i dla sponsorów.</p>
+
+  <div class="callout ok"><strong>Pomysł od Kaia:</strong> codziennie po dniu festiwalowym otrzymujemy zestaw zdjęć (galeria) i publikujemy w app. Wiadomość: „dziś z dnia 1 — zobacz najlepsze momenty" + push. To ekstremalnie zwiększa daily retention i daje treść do social PMG.</div>
+
+  <h3>Format daily content drop</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Element</th><th>Format</th><th>Owner</th><th>Kiedy</th></tr></thead>
+      <tbody>
+        <tr><td>Galeria zdjęć z dnia (15-30 zdjęć)</td><td>Wybór best-of przez fotografa PMG, dropbox / WeTransfer</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td>do 23:00 każdego dnia</td></tr>
+        <tr><td>Publikacja w app (sekcja „Galeria dnia")</td><td>Auto-import + curation</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td>do 23:30</td></tr>
+        <tr><td>Push „Galeria z dnia gotowa"</td><td>Z linkiem deeplink do galerii</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td>23:30 (razem z wrap-up)</td></tr>
+        <tr><td>Highlight reel video (opcjonalnie)</td><td>30-60 sek best moments per dzień</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td>+1h od końca dnia</td></tr>
+        <tr><td>Cross-post na social PMG</td><td>Te same zdjęcia z brandingiem app</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td>w trakcie / po dniu</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Inne live content opportunities</h3>
+  <ul class="checklist">
+    <li><strong>Micro-stories</strong> — short text update'y po setach kluczowych headlinerów</li>
+    <li><strong>Crowd photos challenge</strong> — UGC: użytkownicy wysyłają zdjęcia, najlepsze trafiają do app gallery</li>
+    <li><strong>Backstage moments</strong> — wywiady 30-sek z artystami za zgodą (ekskluzywnie w app)</li>
+    <li><strong>„Co się dzieje teraz"</strong> — live now bar pokazujący wszystkie aktywne sety / strefy</li>
+    <li><strong>Sponsor moment marketing</strong> — np. „lemoniada -30% przez następną godzinę u {{sponsor}}"</li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- BEZPIECZENSTWO -->
+<section id="bezpieczenstwo">
+  <h2>Plan B &amp; safety</h2>
+  <p class="section-intro">Pogoda, zaginięcia, ewakuacja — szablony pushy + procesy gotowe wcześniej. Jak coś się dzieje, nikt nie ma czasu pisać tekstu od zera.</p>
+
+  <h3>Plan pogodowy</h3>
+  <ul class="checklist">
+    <li><strong>Treść gotowa:</strong> „Set X przesunięty o Y z powodu pogody"</li>
+    <li><strong>Treść gotowa:</strong> „Scena Z zamknięta, przejdź na W"</li>
+    <li><strong>Treść gotowa:</strong> „Ewakuacja częściowa — schronienie w {{location}}"</li>
+    <li><strong>Decision tree:</strong> kto wciska guzik (SPOC PMG + production lead + security lead)</li>
+  </ul>
+
+  <h3>Bezpieczeństwo</h3>
+  <ul class="checklist">
+    <li>Templates pushy: ewakuacja, zaginione dziecko, najbliższy med-punkt</li>
+    <li>Integration z security — jak app wspiera ich proces (np. zgłaszanie z lokalizacją GPS)</li>
+    <li>Kontakty awaryjne in-app: medical, security, info point — jeden tap = telefon</li>
+    <li>Polityka „zaginione dziecko" — NIE broadcast, wewnętrzny kanał</li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- MARKETING -->
+<section id="marketing">
+  <h2>Strategia promocji aplikacji</h2>
+  <p class="section-intro"><strong>To duży osobny temat.</strong> Aplikacja sama się nie pobierze. Potrzebujemy strategii: gdzie, kiedy, jak promujemy app, jakie formaty, jakie KPI. Robocie dostarcza propozycje, PMG / Magda zatwierdza budżet i komunikację.</p>
+
+  <div class="callout warn"><strong>Sukces marketingu apki:</strong> ustalmy z Magdą / PMG <strong>konkretne cele</strong> — patrz sekcja <a href="#sukces" style="color:var(--ac)">Cele &amp; sukces</a>. Bez liczbowych targetów nie wiemy, czy 35% pobrań wśród ticket holderów to dużo czy mało.</div>
+
+  <h3>Kanały promocji (basics)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Kanał</th><th>Co publikujemy</th><th>Owner</th><th>Deadline</th></tr></thead>
+      <tbody>
+        <tr><td>Strona ING Beats — sekcja „Pobierz app"</td><td>Banner / sekcja z QR + linkami App Store / Play</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td></tr>
+        <tr><td>QR code do druku</td><td>PDF print-ready z deep linkiem (LineApp dostarcza)</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">T-7</td></tr>
+        <tr><td>Mailing do ticket holderów</td><td>Treść + CTA „pobierz app" + link</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td></tr>
+        <tr><td>Social media plan</td><td>3-5 postów IG/FB/TT promujących app, harmonogram T-14 → T-1</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td></tr>
+        <tr><td>Press release o aplikacji</td><td>Czy ING / event mają PR, czy załatwiamy</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td></tr>
+        <tr><td>Banery / billboardy z QR</td><td>Print-ready files dla drukarni</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">T-10</td></tr>
+        <tr><td>ING owned channels (Moje ING, mailing)</td><td>Czy ING promuje app w swoich kanałach?</td><td class="owner"><span class="owner-pill owner-ing">ING</span></td><td class="deadline">T-10</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Strategie advanced (do uzgodnienia z PMG)</h3>
+
+  <div class="qcard">
+    <div class="qnum">A</div>
+    <div class="qbody"><strong>Early access — wpuśćmy najpierw VIP / influencerów</strong>
+    <p>Tydzień przed launchem dla publiczności otwieramy app dla 100-200 wybranych: artyści, influencerzy, dziennikarze muzyczni. Dostają app + mówią „premiered ekskluzywnie", co generuje organic buzz. Niski koszt, wysoki signal.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">B</div>
+    <div class="qbody"><strong>Wywiady z artystami — content tylko w app</strong>
+    <p>30-sek vertical wywiady z headlinerami nagrane przed eventem. Ekskluzywnie w app: „posłuchaj co X powie o ING Beats". Driver pobrania nawet bez biletu. Materiał potem do social.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">C</div>
+    <div class="qbody"><strong>Animowane promo video (LineApp robi)</strong>
+    <p>Możemy dostarczyć 15-30 sek animacje pokazujące appkę w użyciu — vertical na Reels / TikTok / Stories. Brand-spójne z ING Beats, do social rotation T-14 → T-3. Format: 9:16, mute-friendly z napisami.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">D</div>
+    <div class="qbody"><strong>Celebrity / influencer cooperation</strong>
+    <p>Lista 10-15 PL micro-influencerów (50k-300k IG, muzycznych) — „pobierz app i ułóż swój festiwalowy plan razem ze mną". Barter za bilety VIP / pass / opłata gotówkowa. Decyzja PMG: budget allocation.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">E</div>
+    <div class="qbody"><strong>Paid ads (Meta + Google)</strong>
+    <p>Ads kierowane do mieszkańców Katowic + Śląska + ticket holderów (custom audience). Cele: instalacja + post-install activation. Budżet do uzgodnienia z PMG. Rekomendacja: 5-15k PLN, T-14 → T-3.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">F</div>
+    <div class="qbody"><strong>PR — muzyczne media</strong>
+    <p>Wywiady / artykuły w Onet Muzyka, Newonce, Pitchfork PL, Cgm.pl o aplikacji jako innowacji festiwalowej. Story angle: „ING Beats jako pierwszy polski festival z X". Do uzgodnienia z PR PMG.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">G</div>
+    <div class="qbody"><strong>Pre-event challenge</strong>
+    <p>Konkurs w app przed eventem: „ułóż swój plan na 3 dni i wygraj VIP upgrade / merchandise". Daje uczestnikom powód do otwierania app już teraz, a nie dopiero w dniu eventu. Mechanika do dopracowania.</p></div>
+  </div>
+
+  <div class="qcard">
+    <div class="qnum">H</div>
+    <div class="qbody"><strong>Cross-promo z ING produktami</strong>
+    <p>Czy ING promuje swoją kartę / konto poprzez app? Np. „pierwsi 1000 pobierających app dostaje X PLN bonus na karcie ING". Do uzgodnienia z ING brand manager.</p></div>
+  </div>
+
+  <h3>Co decydujemy z Magdą / PMG</h3>
+  <ul class="checklist">
+    <li><strong>Budżet</strong> na płatną promocję apki (jeśli idzie odgórnie z PMG/ING)</li>
+    <li><strong>Lista influencerów</strong> (PMG ma kontakty w branży muzycznej)</li>
+    <li><strong>Decyzja o early access</strong> + lista zaproszonych</li>
+    <li><strong>Format wywiadów z artystami</strong> + kto realizuje + budżet</li>
+    <li><strong>Channels</strong> ING i jego promocja apki</li>
+    <li><strong>KPI sukcesu</strong> marketingu apki — patrz sekcja Cele &amp; sukces</li>
+  </ul>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- POST -->
+<section id="post">
+  <h2>Po evencie</h2>
+  <p class="section-intro">Wrap-up wartościuje cały projekt — survey, raport sponsorom, post-event content. Plus retencja / usuwanie danych zgodnie z GDPR.</p>
+
+  <h3>Survey post-event</h3>
+  <p style="color:var(--tx2);font-size:13px;margin-bottom:8px"><strong>Pytania do uzgodnienia z PMG / Magdą.</strong> LineApp proponuje strukturę:</p>
+  <ul class="checklist">
+    <li>NPS: „Na ile poleciłbyś ING Beats znajomemu?" (0-10)</li>
+    <li>Top 3 momenty (open question, max 280 znaków)</li>
+    <li>Co byś zmienił/a? (open question)</li>
+    <li>Czy app pomogła? (5-point Likert)</li>
+    <li>Co w app zadziałało najlepiej? (multiple choice: lineup / mapa / pushe / galeria / inne)</li>
+    <li>Czy wrócisz na ING Beats 2027? (Yes / Maybe / No)</li>
+  </ul>
+  <p style="color:var(--tx2);font-size:13px;margin-top:8px"><strong>Pytanie do PMG:</strong> jakie dodatkowe pytania chcecie? Sponsorzy chcą feedback (np. ING brand awareness)?</p>
+
+  <h3>Inne</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Galeria zdjęć eventowych (final)</td><td>Best of all days, opublikowane w app i na stronie</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">+3 dni</td><td><span class="badge badge-ok">OK</span></td></tr>
+        <tr><td>Thank-you push z linkiem do galerii</td><td>Treść + harmonogram</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">+3 dni</td><td><span class="badge badge-ok">OK</span></td></tr>
+        <tr><td>Raport dla sponsorów (DAU, sesje, top sety, klikalność)</td><td>PDF + Google Slides per sponsor</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">+7 dni</td><td><span class="badge badge-ok">OK</span></td></tr>
+        <tr><td>Raport końcowy dla ING (specjalnie)</td><td>Premium PDF z brand visibility, NPS, recall</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">+7 dni</td><td><span class="badge badge-ok">OK</span></td></tr>
+        <tr><td>Plan retencji danych</td><td>Usunięcie / anonimizacja danych user'ów po 90 dniach</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">+90 dni</td><td><span class="badge badge-ok">OK</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FORMAT -->
+<section id="format">
+  <h2>Format dostarczania</h2>
+  <p class="section-intro">Jedna paczka Google Drive od PMG, jasna struktura, owner per folder, deadline per pozycja. Bez tego rozjedzie się w 50 maili — sprawdzone na FKŻ, Pol'and'Rock, OFF Festival.</p>
+
+  <h3>Rekomendowana struktura folderu</h3>
+  <div class="folder-tree"><span class="folder">ING Beats Silesia 2026 / app-deliverables /</span>
+├── <span class="folder">01_Brand</span>             <span class="comment">// logotypy, fonty, paleta, brand book</span>
+├── <span class="folder">02_Lineup</span>            <span class="comment">// final lineup CSV + zdjęcia + bio + grid setów</span>
+├── <span class="folder">03_Mapa</span>              <span class="comment">// SVG planu + GPS POI + parkingi + dojazd</span>
+├── <span class="folder">04_Tickets</span>           <span class="comment">// vendor info, API spec, opaski, cashless (po sesji z Pawłem)</span>
+├── <span class="folder">05_Plan_Informacyjny</span> <span class="comment">// Google Doc PL + EN + UA, FAQ</span>
+├── <span class="folder">06_Food</span>              <span class="comment">// lista wystawców + diety + lokalizacje</span>
+├── <span class="folder">07_ING</span>               <span class="comment">// kontaktowe widoczności, brand book, aktywacje</span>
+├── <span class="folder">08_Sponsorzy</span>         <span class="comment">// pozostali sponsorzy: tier 2/3, logotypy, aktywacje</span>
+├── <span class="folder">09_Tresci</span>            <span class="comment">// welcome, news, before-you-go tips</span>
+├── <span class="folder">10_Legal</span>             <span class="comment">// DPA, privacy, terms, zgody</span>
+├── <span class="folder">11_Marketing</span>         <span class="comment">// QR, mailing, social plan, lista influencerów</span>
+├── <span class="folder">12_Operacja</span>          <span class="comment">// SPOC, kontakty 24/7, macierz akceptacji</span>
+├── <span class="folder">13_Live_Content</span>      <span class="comment">// daily photo drop folder (uzupełniany w trakcie)</span>
+└── <span class="file">14_Kontakty.gdoc</span>      <span class="comment">// wszystkie osoby + role + telefony 24/7</span></div>
+
+  <h3>Zasady</h3>
+  <ul class="checklist">
+    <li><strong>Każdy folder ma owner po stronie PMG</strong> — imię i nazwisko, kontakt</li>
+    <li><strong>Każdy plik ma deadline</strong> z tej checklisty</li>
+    <li><strong>Status update w shared Sheets</strong> — co tydzień, kolory: red / orange / yellow / green</li>
+    <li><strong>Versioning:</strong> nazwy plików z _v2, _v3 — nie nadpisywać oryginałów</li>
+    <li><strong>Final files</strong> w osobnym subfolderze _FINAL po akceptacji</li>
+  </ul>
+
+  <h3>Komunikacja</h3>
+  <ul class="checklist">
+    <li>Slack / WhatsApp grupa — my + SPOC + 1-2 osoby techniczne PMG</li>
+    <li>Email tylko do oficjalnych dokumentów (kontrakt, faktury)</li>
+    <li>Daily 15-min standup w ostatnim tygodniu</li>
+    <li>Eskalacja: SPOC → manager projektu LineApp → CEO obu stron (jeśli krytyczne)</li>
+  </ul>
+
+  <div class="callout ok"><strong>Następne kroki:</strong>
+    <ol style="margin:8px 0;padding-left:24px">
+      <li>Sesja LineApp + Paweł — domknięcie 7 pytań open</li>
+      <li>v1.2 tej checklisty po sesji</li>
+      <li>Spotkanie LineApp + PMG + Magda — definicja sukcesu, KPI, marketing strategia</li>
+      <li>Wysyłka brief'u do PMG z linkiem do tej strony + Google Drive setup</li>
+      <li>Spotkanie LineApp + PMG + ING brand manager — aktywacje i akceptacje</li>
+    </ol>
+  </div>
+</section>
+
+</div>
+</main>
+</div>
+
+<script>
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open')}
+function toggleTheme(){
+  const isLight = document.documentElement.classList.toggle('light');
+  try{localStorage.setItem('theme',isLight?'light':'dark')}catch(e){}
+}
+(function(){
+  try{
+    const saved = localStorage.getItem('theme');
+    if(saved === 'light') document.documentElement.classList.add('light');
+  }catch(e){}
+})();
+
+const sections = document.querySelectorAll('section[id]');
+const navItems = document.querySelectorAll('.nav-item');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const id = e.target.id;
+      navItems.forEach(n=>n.classList.toggle('active', n.dataset.section === id));
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>observer.observe(s));
+
+navItems.forEach(n=>n.addEventListener('click',()=>{
+  if(window.innerWidth < 900) toggleSidebar();
+}));
+</script>
+
+</body>
+</html>
