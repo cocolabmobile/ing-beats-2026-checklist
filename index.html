@@ -205,21 +205,19 @@ section:nth-child(6){animation-delay:.25s}
   <div class="sidebar-header" style="position:relative">
     <div class="sidebar-logo">◆ LineApp × PMG</div>
     <div class="sidebar-title">App Production Checklist</div>
-    <div class="sidebar-sub">ING Beats Silesia 2026 · v1.2</div>
+    <div class="sidebar-sub">ING Beats Silesia 2026 · v1.3</div>
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode"></button>
   </div>
   <nav class="sidebar-nav" id="nav">
     <div class="nav-section"><div class="nav-section-label">Overview</div></div>
     <a class="nav-item active" href="#overview" data-section="overview"><span class="nav-icon">◎</span>Overview &amp; timeline</a>
     <a class="nav-item" href="#sukces" data-section="sukces"><span class="nav-icon">◉</span>Cele &amp; sukces</a>
-    <a class="nav-item" href="#pytania" data-section="pytania"><span class="nav-icon">✓</span>Odpowiedzi Pawła</a>
     <a class="nav-item" href="#lineapp" data-section="lineapp"><span class="nav-icon">◆</span>Co robi LineApp</a>
 
     <div class="nav-section"><div class="nav-section-label">Od PMG · T-14</div></div>
     <a class="nav-item" href="#brand" data-section="brand"><span class="nav-icon">◆</span>Brand &amp; visual</a>
     <a class="nav-item" href="#lineup" data-section="lineup"><span class="nav-icon">⊕</span>Lineup &amp; harmonogram</a>
     <a class="nav-item" href="#mapa" data-section="mapa"><span class="nav-icon">◈</span>Mapa &amp; dojazd</a>
-    <a class="nav-item" href="#tickets" data-section="tickets"><span class="nav-icon">⛨</span>Tickets &amp; wejście</a>
 
     <div class="nav-section"><div class="nav-section-label">Od PMG · przed launchem</div></div>
     <a class="nav-item" href="#info" data-section="info"><span class="nav-icon">⊞</span>Plan informacyjny</a>
@@ -249,7 +247,7 @@ section:nth-child(6){animation-delay:.25s}
     <a class="nav-item" href="#format" data-section="format"><span class="nav-icon">⇆</span>Format dostarczania</a>
   </nav>
   <div class="sidebar-footer">
-    LineApp × CocoLab.pl<br>v1.2 · 2026-04-29 (z odp Pawła)
+    LineApp × CocoLab.pl<br>v1.3 · 2026-04-30
   </div>
 </aside>
 
@@ -258,15 +256,15 @@ section:nth-child(6){animation-delay:.25s}
 
 <!-- OVERVIEW -->
 <section id="overview" class="hero">
-  <div class="hero-badge">v1.2 · ODP PAWŁA</div>
+  <div class="hero-badge">v1.3 · CLIENT BRIEF</div>
   <h1>ING Beats Silesia 2026</h1>
   <p class="hero-desc">Lista wszystkiego, co potrzebujemy by zbudować aplikację mobilną w wymaganym oknie 2 tygodni. Trzy strony: <strong style="color:var(--blue)">PMG Group</strong> (organizator), <strong style="color:var(--ac)">LineApp</strong> (dostawca app), <strong style="color:var(--purple)">ING</strong> (sponsor tytularny). Każdy element ma owner'a i deadline.</p>
 
   <div class="stats-grid">
     <div class="stat-card"><div class="stat-value ac">14</div><div class="stat-label">dni do app na storach</div></div>
     <div class="stat-card"><div class="stat-value">3</div><div class="stat-label">strony współpracy</div></div>
-    <div class="stat-card"><div class="stat-value red">8</div><div class="stat-label">blokery T-14</div></div>
-    <div class="stat-card"><div class="stat-value green">7/7</div><div class="stat-label">odpowiedzi Pawła</div></div>
+    <div class="stat-card"><div class="stat-value red">7</div><div class="stat-label">blokery T-14</div></div>
+    <div class="stat-card"><div class="stat-value green">PL/EN/UA</div><div class="stat-label">3 języki rekomendowane</div></div>
   </div>
 
   <h3>Trzy strony, trzy zakresy</h3>
@@ -274,7 +272,7 @@ section:nth-child(6){animation-delay:.25s}
     <table>
       <thead><tr><th>Strona</th><th>Rola</th><th>Owner czego</th></tr></thead>
       <tbody>
-        <tr><td><span class="owner-pill owner-pmg">PMG</span></td><td>Organizator festiwalu</td><td>Brand, lineup, mapa, content informacyjny, sponsorzy, tickets, marketing eventowy</td></tr>
+        <tr><td><span class="owner-pill owner-pmg">PMG</span></td><td>Organizator festiwalu &amp; właściciel aplikacji</td><td>Brand, lineup, mapa, content informacyjny, sponsorzy, marketing eventowy</td></tr>
         <tr><td><span class="owner-pill owner-line">LINE</span></td><td>Dostawca app + media</td><td>Build, app icon, splash, logotypy scen, pushe, store submission, animacje promo, raporty</td></tr>
         <tr><td><span class="owner-pill owner-ing">ING</span></td><td>Sponsor tytularny</td><td>Brand book ING, akceptacje brand managera, aktywacje sponsorskie</td></tr>
         <tr><td><span class="owner-pill owner-joint">JOINT</span></td><td>Wspólnie</td><td>Onboarding decision, late-change process, KPI sukcesu, DPA</td></tr>
@@ -287,7 +285,7 @@ section:nth-child(6){animation-delay:.25s}
     <div class="timeline-item crit">
       <div class="timeline-date">Tydzień 1 · T-14 → T-7</div>
       <div class="timeline-title">Blokery — bez tego nie zaczynamy buildu</div>
-      <div class="timeline-desc">Brand kit (wektory, fonty z licencją), final lineup z setami, mapa terenu w wektorze, decyzja o ticketach + opasce + cashless.</div>
+      <div class="timeline-desc">Brand kit (wektory, fonty), final lineup z setami, mapa terenu w wektorze, integracje z systemem informacji o eventcie.</div>
     </div>
     <div class="timeline-item high">
       <div class="timeline-date">Tydzień 2 · T-7 → T-2</div>
@@ -366,76 +364,6 @@ section:nth-child(6){animation-delay:.25s}
 
 <div class="section-divider"></div>
 
-<!-- PYTANIA -->
-<section id="pytania">
-  <h2>Odpowiedzi Pawła (2026-04-29)</h2>
-  <p class="section-intro">Wszystkie 7 pytań z v1.1 dostały odpowiedzi techniczne od Pawła. Każdy element checklisty zaktualizowany w sekcjach poniżej. Recon: bezpośrednio z kodu LineApp (iOS Swift + Android Kotlin + Imgix CDN).</p>
-
-  <div class="callout ok"><strong>Status:</strong> 7/7 odpowiedzi <span class="badge badge-ok">DONE</span> · źródło: <code class="inline-code">cocolab (shared&amp;Pawel)/ING Beats/Preprodukcja/2026-04-29 ING Beats Silesia - odpowiedzi PMG (1-2-3-7).md</code></div>
-
-  <div class="qcard">
-    <div class="qnum" style="background:var(--green)">1</div>
-    <div class="qbody"><strong>Typografia <span class="badge badge-ok">DONE</span></strong>
-    <p><strong>Domyślnie fonty systemowe</strong> (San Francisco / Roboto) — zero kosztu, zero ryzyka licencyjnego. Custom font od PMG = wymagamy plików <code class="inline-code">.otf/.ttf</code> + <strong>licencji embed mobile na iOS i Android</strong> od foundry. Sama nazwa fontu nie wystarczy.</p>
-    <p style="color:var(--tx3);font-size:12px;margin-top:6px"><strong>Recon:</strong> iOS i Android używają systemowych fontów. <code class="inline-code">App/Sources/Festivals/*/Resources/</code> i <code class="inline-code">app/src/*/res/</code> — brak custom <code class="inline-code">.ttf/.otf</code> per festival. Custom font dla ING Beats = nowa praca + osobna licencja na obie platformy.</p></div>
-  </div>
-
-  <div class="qcard">
-    <div class="qnum" style="background:var(--green)">2</div>
-    <div class="qbody"><strong>Rozdzielczość zdjęć artystów <span class="badge badge-ok">DONE</span></strong>
-    <p><strong>Preferred:</strong> 1 plik per artysta, JPG/PNG, <strong>≥2400px po dłuższym boku</strong> (idealnie 3000px), <strong>kwadrat (1:1) lub portret (4:5)</strong>, luźny kadr. Reszta po naszej stronie — <strong>Imgix CDN</strong> (<code class="inline-code">cocolab.imgix.net</code>) generuje thumbnails / banners / hero crops dynamicznie.</p>
-    <p><strong>Acceptable:</strong> ≥1500px. <strong>No-go:</strong> &lt;1000px, screenshoty z IG, pre-skompresowane JPG-i. Press kit od PR-u OK.</p>
-    <p style="color:var(--tx3);font-size:12px;margin-top:6px"><strong>Recon:</strong> Imgix pipeline — <code class="inline-code">App/Sources/Backend/Images/Imgix/ImgixImageProvider.swift</code>. iOS: Kingfisher + Imgix. Android: Glide + Imgix. Jeden upload starcza na wszystkie ekrany — landscape/wide niepotrzebny, generujemy z kwadratu.</p></div>
-  </div>
-
-  <div class="qcard">
-    <div class="qnum" style="background:var(--orange)">3+7</div>
-    <div class="qbody"><strong>Plan piętra / venue ING Beats <span class="badge badge-high">PMG MUSI ZDECYDOWAĆ</span></strong>
-    <p><strong>Outdoor only</strong> = działa od ręki (Pol'and'Rock, OWF, SBM — sprawdzone). <strong>Multi-venue indoor</strong> (Spodek + kluby) = <strong>brak obsługi w core platform</strong> — indoor floor plans = custom dev, osobny scope, osobna wycena.</p>
-    <p style="color:var(--tx3);font-size:12px;margin-top:6px"><strong>Recon:</strong> Mamy Google Maps SDK + clustering. <strong>BRAK</strong>: <code class="inline-code">GMSGroundOverlay</code>, tile layers, SVG renderera. <code class="inline-code">MapViewController</code> / <code class="inline-code">MapMarkerView</code> / <code class="inline-code">HeatMapApplicationService</code> — wszystko geo-based (lat/lng).</p>
-    <p style="color:var(--ac);font-size:13px;margin-top:6px"><strong>Akcja:</strong> wymagamy decyzji od PMG <strong>przed scopingiem</strong> — to fundamentalnie zmienia wycenę.</p></div>
-  </div>
-
-  <div class="qcard">
-    <div class="qnum" style="background:var(--orange)">4</div>
-    <div class="qbody"><strong>Tickets — to nie jedno pytanie, to 5 osobnych decyzji <span class="badge badge-high">PMG ROZŁOŻYĆ</span></strong>
-    <p>Każdy z 5 elementów ma inny impact na architekturę i scope:</p>
-    <ol style="margin:6px 0 6px 24px;color:var(--tx2);font-size:13px;line-height:1.7">
-      <li><strong>Vendor biletowy</strong> — eBilet / Going / Ticketmaster / własny PMG?</li>
-      <li><strong>Opaski</strong> — RFID/NFC? Kto produkuje, kto integruje?</li>
-      <li><strong>Cashless wallet</strong> — czy w ogóle? Top-up flow, refundy?</li>
-      <li><strong>Integracja API/PDF</strong> — pull z vendora czy push? PDF do Apple/Google Pay wallet?</li>
-      <li><strong>Zwroty/reklamacje</strong> — w app czy redirect do vendora?</li>
-    </ol>
-    <p style="color:var(--tx3);font-size:12px;margin-top:6px"><strong>Recon:</strong> Brak kodu ticket/wallet/cashless w repo. Mamy <code class="inline-code">OrderService</code> + <code class="inline-code">APIClient</code> async/await dla shop/payment, ale to merch — nie wstęp. Każda integracja vendor biletowy = nowa praca, custom scope.</p>
-    <p style="color:var(--ac);font-size:13px;margin-top:6px"><strong>Strategia:</strong> trzeba PMG to rozłożyć i wymagać decyzji per punkt zanim damy wycenę.</p></div>
-  </div>
-
-  <div class="qcard">
-    <div class="qnum" style="background:var(--green)">5</div>
-    <div class="qbody"><strong>Age-gate &amp; legal compliance <span class="badge badge-ok">DONE</span></strong>
-    <p><strong>PMG ma swoich prawników, my dostarczamy techniczny link/screen.</strong> Pełny consent flow (age-gate, cookie banner, GDPR opt-in) <strong>nigdy nie był buildowany w core platform</strong> — jeśli ING wymaga, to custom scope.</p>
-    <p style="color:var(--tx3);font-size:12px;margin-top:6px"><strong>Recon:</strong> Mamy tylko <code class="inline-code">Settings → Privacy Policy</code> (link do URL od klienta). Brak age-gate, brak cookie consent UI, brak granular GDPR opt-in.</p>
-    <p style="color:var(--ac);font-size:13px;margin-top:6px"><strong>Strategia:</strong> pchamy że odpowiedzialność prawna = PMG/ING. My implementujemy to co prawnik powie — nie projektujemy compliance.</p></div>
-  </div>
-
-  <div class="qcard">
-    <div class="qnum" style="background:var(--green)">6</div>
-    <div class="qbody"><strong>Privacy policy administrator <span class="badge badge-ok">DONE</span></strong>
-    <p><strong>PMG sole controller, LineApp procesor.</strong> Standard z poprzednich festiwali. DPA template mamy gotowy — dorzucamy do umowy.</p>
-    <p style="color:var(--ac);font-size:13px;margin-top:6px"><strong>Strategia:</strong> joint controllers tylko jeśli PMG się uprze i jest biznesowy powód (np. shared marketing analytics). Domyślnie unikamy — większa odpowiedzialność po naszej stronie.</p></div>
-  </div>
-
-  <h3>Otwarte do decyzji PMG (po odpowiedziach Pawła)</h3>
-  <ul class="checklist">
-    <li><strong>Outdoor vs multi-venue indoor</strong> — kluczowe dla scopingu mapy (3+7)</li>
-    <li><strong>Tickets — 5 osobnych decyzji</strong> — wymaga osobnej rundy (4)</li>
-    <li><strong>Custom font</strong> tak/nie — jeśli tak, PMG dostarcza pliki + licencję embed mobile (1)</li>
-    <li><strong>Compliance custom</strong> tak/nie — jeśli ING wymaga age-gate / GDPR opt-in, to osobny scope (5)</li>
-  </ul>
-</section>
-
-<div class="section-divider"></div>
 
 <!-- LINEAPP DELIVERABLES -->
 <section id="lineapp">
@@ -482,7 +410,7 @@ section:nth-child(6){animation-delay:.25s}
         <tr><td>Logo ING + ING Beats z brand bookiem</td><td>Vector + PDF guidelines, marginesy ochronne, paleta Pantone</td><td class="owner"><span class="owner-pill owner-ing">ING</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
         <tr><td>Logotypy partnerów / sponsorów</td><td>Vector, lista z hierarchią (tier 1/2/3) — patrz sekcja Sponsorzy</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Paleta kolorów</td><td>HEX + RGB + Pantone, primary / secondary / accent + zasady użycia</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
-        <tr><td>Typografia (decyzja PMG)</td><td><strong>Default:</strong> systemowe fonty (SF / Roboto) — zero kosztu. <strong>Custom:</strong> pliki <code>.otf/.ttf</code> + licencja embed mobile iOS+Android od foundry</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-high">DECYZJA</span></td></tr>
+        <tr><td>Typografia</td><td>Jeśli macie custom font festiwalu — <strong>prześlijcie pliki <code>.otf/.ttf</code> + info o licencji</strong>. Spróbujemy go umieścić w aplikacji</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-med">OPCJA</span></td></tr>
         <tr><td>Brand guidelines PDF</td><td>Pełny styleguide festiwalu, jeśli istnieje</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Hero / key visual edycji 2026</td><td>Min 3000px szer., warianty pion/poziom</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
       </tbody>
@@ -571,7 +499,6 @@ section:nth-child(6){animation-delay:.25s}
       <tbody>
         <tr><td>Plan terenu — wektor</td><td>SVG / AI, layery: sceny, gastro, toi-toi, medical, info, bagażownia, ATM, woda, akredytacje</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
         <tr><td>Współrzędne GPS</td><td>Lat/lng dla każdego POI, format CSV</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
-        <tr><td>Outdoor czy multi-venue indoor?</td><td><strong>Decyzja PMG przed scopingiem.</strong> Outdoor = działa (Pol'and'Rock, OWF, SBM). Indoor floor plans = brak w core platform, custom dev + osobna wycena</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-13</td><td><span class="badge badge-crit">CRIT</span></td></tr>
         <tr><td>Wjazdy / wejścia / kasy</td><td>Lokalizacja + godziny + typ (VIP / general / press)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
         <tr><td>Strefy dla niepełnosprawnych</td><td>Lokalizacja + opis (rampa / podjazd / sensory-friendly)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
       </tbody>
@@ -607,31 +534,6 @@ section:nth-child(6){animation-delay:.25s}
 
 <div class="section-divider"></div>
 
-<!-- TICKETS -->
-<section id="tickets">
-  <h2>Tickets &amp; wejście</h2>
-  <p class="section-intro">Po odp. Pawła: <strong>to nie jedno pytanie — to 5 osobnych decyzji</strong>. Każda ma inny impact na architekturę i scope. Brak jakiegokolwiek kodu ticket/wallet/cashless w core repo — każda integracja = nowa praca, custom scope, osobna wycena.</p>
-
-  <div class="callout warn"><strong>Strategia:</strong> przed wyceną wymagamy od PMG decyzji per każdy z 5 punktów. Bez tego nie jesteśmy w stanie scope'ować buildu w 2-tygodniowym oknie.</div>
-
-  <h3>Decyzje do podjęcia</h3>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Decyzja</th><th>Opcje</th><th>Wpływ na build</th></tr></thead>
-      <tbody>
-        <tr><td>Vendor biletowy</td><td>Going / Eventim / Bilety24 / własny PMG</td><td>API integration time</td></tr>
-        <tr><td>Linkujemy bilet z kontem w app?</td><td>Tak (QR scan wewnątrz app) / Nie (bilet zewnętrzny)</td><td>Auth flow + scan UI</td></tr>
-        <tr><td>Opaska RFID/NFC linkuje z app?</td><td>Tak (bind przy registracji) / Nie / Zewnętrzna</td><td>Hardware integration</td></tr>
-        <tr><td>Cashless wallet w app?</td><td>Tak (in-app wallet) / Tylko view balance / Zewnętrzny</td><td>Payment integration + PCI</td></tr>
-        <tr><td>Top-up cashless w app?</td><td>Tak (Stripe/PayU) / Tylko offline / Brak</td><td>Payment processor + onboarding</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <p style="color:var(--tx2);font-size:13px">Po decyzji — aktualizujemy listę do PMG z konkretnym brief'em (vendor, format API, deadlines, kontakty).</p>
-</section>
-
-<div class="section-divider"></div>
 
 <!-- INFO -->
 <section id="info">
@@ -649,7 +551,7 @@ section:nth-child(6){animation-delay:.25s}
         <tr><td>Regulamin imprezy + skrót w app</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Co można / nie można wnieść</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Polityka wieku, dzieci, zwierząt</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">HIGH</span></td></tr>
-        <tr><td>Płatności (cashless / gotówka / top-up)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Sposoby płatności na evencie (info dla uczestnika)</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Bagażownia — godziny, cena, lokalizacja</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Strefa palenia, alkohol, narkotyki — komunikat</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
         <tr><td>Lost &amp; found — proces + lokalizacja</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
@@ -745,7 +647,6 @@ section:nth-child(6){animation-delay:.25s}
         <tr><td>Akceptacje brand managera</td><td>Kto i jaki SLA na akceptacje materiałów?</td><td><span class="badge badge-info">TBD</span></td></tr>
         <tr><td>Raport po evencie dla ING</td><td>Co konkretnie w raporcie? (impresje, CTR, NPS, brand recall?)</td><td><span class="badge badge-info">TBD</span></td></tr>
         <tr><td>ING pre-event marketing</td><td>Czy ING promuje app w swoich kanałach (Moje ING, ING social, mailing)?</td><td><span class="badge badge-info">TBD</span></td></tr>
-        <tr><td>ING jako publisher na storey?</td><td>Decyzja: konto ING / PMG / LineApp — patrz sekcja Konta App Store</td><td><span class="badge badge-crit">CRIT</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -892,21 +793,19 @@ section:nth-child(6){animation-delay:.25s}
 <!-- LEGAL -->
 <section id="legal">
   <h2>Legal &amp; GDPR</h2>
-  <p class="section-intro">Zbieranie danych użytkowników w app + sponsoring ING = poważne wymagania compliance. DPA między LineApp a PMG MUSI być podpisana przed launchem.</p>
+  <p class="section-intro">PMG Group jest <strong>operatorem danych użytkowników</strong> i właścicielem aplikacji. LineApp dostarcza aplikację jako procesor. Możemy przygotować dla Was szablon polityki prywatności — zatwierdza ją Wasz prawnik.</p>
 
-  <div class="callout crit"><strong>Bez podpisanej DPA nie publikujemy aplikacji.</strong> Template DPA dostarcza LineApp → prawnik PMG akceptuje → podpisujemy. Zakładamy 5-7 dni na proces.</div>
+  <div class="callout"><strong>Podział ról:</strong> <span class="owner-pill owner-pmg">PMG</span> = operator/administrator danych + właściciel aplikacji. <span class="owner-pill owner-line">LINE</span> = procesor (dostawca technologii). DPA podpisujemy przed launchem.</div>
 
   <div class="table-wrap">
     <table>
       <thead><tr><th style="width:40%">Element</th><th>Format</th><th>Owner</th><th>Deadline</th><th>Status</th></tr></thead>
       <tbody>
-        <tr><td>Privacy policy PL + EN</td><td><strong>PMG sole controller, LineApp procesor</strong> (potwierdzone przez Pawła — standard z poprzednich festiwali). DPA template gotowy.</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
-        <tr><td>Terms of service</td><td>Warunki korzystania z aplikacji</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
-        <tr><td>DPA (umowa powierzenia)</td><td>Template LineApp → prawnik PMG → podpis obu</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
-        <tr><td>Zgody marketingowe</td><td>Treść checkboxa do akceptacji prawnika PMG</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
-        <tr><td>Cookie / tracking consent</td><td>Banner zgodny z RODO, jeśli analytics</td><td class="owner"><span class="owner-pill owner-line">LINE</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
-        <tr><td>Age-gate &amp; consent flow</td><td><strong>Default: my dostarczamy techniczny link/screen, PMG ma prawników.</strong> Pełny custom consent (age-gate UI, cookie banner, GDPR opt-in) = nigdy nie był buildowany w core, jeśli ING wymaga to osobny scope</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-10</td><td><span class="badge badge-high">DECYZJA</span></td></tr>
-        <tr><td>Plan retencji danych</td><td>Usunięcie / anonimizacja po 90 dniach</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Privacy policy PL + EN</td><td>LineApp przygotowuje draft → prawnik PMG akceptuje i finalizuje</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Terms of service</td><td>LineApp draft → akceptacja PMG</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>DPA (umowa powierzenia)</td><td>Template LineApp → prawnik PMG → podpis obu stron</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-10</td><td><span class="badge badge-crit">CRIT</span></td></tr>
+        <tr><td>Zgody marketingowe</td><td>Treść checkboxa zatwierdzona przez prawnika PMG</td><td class="owner"><span class="owner-pill owner-pmg">PMG</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
+        <tr><td>Plan retencji danych</td><td>Usunięcie / anonimizacja po 90 dniach od końca eventu</td><td class="owner"><span class="owner-pill owner-joint">JOINT</span></td><td class="deadline">T-7</td><td><span class="badge badge-high">HIGH</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -1189,17 +1088,16 @@ section:nth-child(6){animation-delay:.25s}
 ├── <span class="folder">01_Brand</span>             <span class="comment">// logotypy, fonty, paleta, brand book</span>
 ├── <span class="folder">02_Lineup</span>            <span class="comment">// final lineup CSV + zdjęcia + bio + grid setów</span>
 ├── <span class="folder">03_Mapa</span>              <span class="comment">// SVG planu + GPS POI + parkingi + dojazd</span>
-├── <span class="folder">04_Tickets</span>           <span class="comment">// vendor info, API spec, opaski, cashless (po sesji z Pawłem)</span>
-├── <span class="folder">05_Plan_Informacyjny</span> <span class="comment">// Google Doc PL + EN + UA, FAQ</span>
-├── <span class="folder">06_Food</span>              <span class="comment">// lista wystawców + diety + lokalizacje</span>
-├── <span class="folder">07_ING</span>               <span class="comment">// kontaktowe widoczności, brand book, aktywacje</span>
-├── <span class="folder">08_Sponsorzy</span>         <span class="comment">// pozostali sponsorzy: tier 2/3, logotypy, aktywacje</span>
-├── <span class="folder">09_Tresci</span>            <span class="comment">// welcome, news, before-you-go tips</span>
-├── <span class="folder">10_Legal</span>             <span class="comment">// DPA, privacy, terms, zgody</span>
-├── <span class="folder">11_Marketing</span>         <span class="comment">// QR, mailing, social plan, lista influencerów</span>
-├── <span class="folder">12_Operacja</span>          <span class="comment">// SPOC, kontakty 24/7, macierz akceptacji</span>
-├── <span class="folder">13_Live_Content</span>      <span class="comment">// daily photo drop folder (uzupełniany w trakcie)</span>
-└── <span class="file">14_Kontakty.gdoc</span>      <span class="comment">// wszystkie osoby + role + telefony 24/7</span></div>
+├── <span class="folder">04_Plan_Informacyjny</span> <span class="comment">// Google Doc PL + EN + UA, FAQ</span>
+├── <span class="folder">05_Food</span>              <span class="comment">// lista wystawców + diety + lokalizacje</span>
+├── <span class="folder">06_ING</span>               <span class="comment">// kontaktowe widoczności, brand book, aktywacje</span>
+├── <span class="folder">07_Sponsorzy</span>         <span class="comment">// pozostali sponsorzy: tier 2/3, logotypy, aktywacje</span>
+├── <span class="folder">08_Tresci</span>            <span class="comment">// welcome, news, before-you-go tips</span>
+├── <span class="folder">09_Legal</span>             <span class="comment">// DPA, privacy, terms, zgody</span>
+├── <span class="folder">10_Marketing</span>         <span class="comment">// QR, mailing, social plan, lista influencerów</span>
+├── <span class="folder">11_Operacja</span>          <span class="comment">// SPOC, kontakty 24/7, macierz akceptacji</span>
+├── <span class="folder">12_Live_Content</span>      <span class="comment">// daily photo drop folder (uzupełniany w trakcie)</span>
+└── <span class="file">13_Kontakty.gdoc</span>      <span class="comment">// wszystkie osoby + role + telefony 24/7</span></div>
 
   <h3>Zasady</h3>
   <ul class="checklist">
@@ -1220,10 +1118,9 @@ section:nth-child(6){animation-delay:.25s}
 
   <div class="callout ok"><strong>Następne kroki:</strong>
     <ol style="margin:8px 0;padding-left:24px">
-      <li>Sesja LineApp + Paweł — domknięcie 7 pytań open</li>
-      <li>v1.3 tej checklisty po decyzjach PMG (outdoor/indoor + tickets x5)</li>
-      <li>Spotkanie LineApp + PMG + Magda — definicja sukcesu, KPI, marketing strategia</li>
-      <li>Wysyłka brief'u do PMG z linkiem do tej strony + Google Drive setup</li>
+      <li>PMG przegląda checklist i daje feedback per sekcja</li>
+      <li>Spotkanie LineApp + PMG + Magda — definicja sukcesu, KPI, strategia promocji apki</li>
+      <li>Setup Google Drive z folderami wg struktury powyżej + nadanie uprawnień</li>
       <li>Spotkanie LineApp + PMG + ING brand manager — aktywacje i akceptacje</li>
     </ol>
   </div>
