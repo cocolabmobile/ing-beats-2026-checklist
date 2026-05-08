@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Name Preview — Springboard, App Store, Google Play</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f3f3f0;
+    --card: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #6b6b6b;
+    --line: #e5e5e2;
+    --green: #2e9e5e;
+    --amber: #c79100;
+    --red: #c0392b;
+    --blue: #007aff;
+    --android-blue: #4285f4;
+  }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 32px 24px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  header { margin-bottom: 28px; }
+  h1 { font-size: 22px; letter-spacing: -0.02em; font-weight: 700; }
+  .lead { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+
+  .input-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+  .input-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .input-row label { font-size: 12px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.04em; min-width: 130px; }
+  .input-row input {
+    flex: 1;
+    min-width: 200px;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: #fafaf8;
+    font-family: inherit;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-row input:focus { border-color: var(--blue); background: #fff; }
+  .counter {
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 64px;
+    text-align: right;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #f0f0ed;
+    color: var(--ink-soft);
+  }
+  .counter.ok { background: #e3f5ea; color: var(--green); }
+  .counter.warn { background: #fcf2dc; color: var(--amber); }
+  .counter.bad { background: #fbe2dd; color: var(--red); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h3 { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 4px; }
+  .card .meta { font-size: 11px; color: var(--ink-soft); margin-bottom: 14px; }
+  .card .meta strong { color: var(--ink); }
+
+  /* iOS Springboard */
+  .ios-springboard {
+    background: linear-gradient(180deg, #6dc4f3 0%, #b8e2f5 100%);
+    border-radius: 28px;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 160px;
+    justify-content: center;
+  }
+  .ios-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 22px;
+  }
+  .ios-springboard .label {
+    margin-top: 8px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    text-align: center;
+    max-width: 80px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* iOS App Store search row */
+  .ios-search-row {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid #f0f0ed;
+  }
+  .ios-search-row .icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+    flex-shrink: 0;
+  }
+  .ios-search-row .info { flex: 1; min-width: 0; }
+  .ios-search-row .name { font-size: 15px; font-weight: 600; color: #000; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ios-search-row .subtitle { font-size: 12.5px; color: #6b6b6b; margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ios-search-row .get-btn { background: #f0f0f0; color: #007aff; border-radius: 16px; padding: 6px 16px; font-size: 13px; font-weight: 700; }
+
+  /* iOS App Store product page */
+  .ios-product {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid #f0f0ed;
+  }
+  .ios-product-head { display: flex; gap: 14px; align-items: flex-start; }
+  .ios-product-head .icon {
+    width: 86px; height: 86px;
+    border-radius: 19px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+    flex-shrink: 0;
+  }
+  .ios-product .name { font-size: 22px; font-weight: 700; color: #000; line-height: 1.15; letter-spacing: -0.01em; }
+  .ios-product .subtitle { font-size: 14px; color: #6b6b6b; margin-top: 6px; line-height: 1.3; }
+  .ios-product .meta-row { font-size: 12px; color: #6b6b6b; margin-top: 10px; display: flex; gap: 14px; }
+
+  /* Android launcher */
+  .android-launcher {
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 28px;
+    padding: 24px 16px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .android-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .android-launcher .label {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    max-width: 78px;
+    line-height: 1.25;
+    font-family: "Roboto", "Google Sans", -apple-system, sans-serif;
+  }
+
+  /* Google Play search row */
+  .play-row {
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    border: 1px solid #f0f0ed;
+    font-family: "Roboto", "Google Sans", -apple-system, sans-serif;
+  }
+  .play-row .icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+    flex-shrink: 0;
+  }
+  .play-row .info { flex: 1; min-width: 0; }
+  .play-row .name { font-size: 15px; font-weight: 500; color: #202124; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .play-row .dev { font-size: 13px; color: #5f6368; margin-top: 1px; }
+  .play-row .rating { font-size: 12px; color: #5f6368; margin-top: 2px; }
+
+  /* Google Play product page */
+  .play-product {
+    background: #fff;
+    border-radius: 8px;
+    padding: 18px;
+    border: 1px solid #f0f0ed;
+    font-family: "Roboto", "Google Sans", -apple-system, sans-serif;
+  }
+  .play-product-head { display: flex; gap: 14px; align-items: flex-start; }
+  .play-product-head .icon {
+    width: 72px; height: 72px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
+    flex-shrink: 0;
+  }
+  .play-product .name { font-size: 22px; font-weight: 500; color: #202124; line-height: 1.15; }
+  .play-product .dev { font-size: 14px; color: #01875f; margin-top: 6px; font-weight: 500; }
+  .play-product .short-desc { font-size: 14px; color: #5f6368; margin-top: 14px; line-height: 1.4; }
+
+  /* truncation indicator strip */
+  .truncation-flag {
+    font-size: 11px;
+    color: var(--red);
+    margin-top: 8px;
+    display: none;
+    font-weight: 500;
+  }
+  .truncation-flag.show { display: block; }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  footer h4 { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+  footer ul { padding-left: 20px; margin-top: 4px; }
+  footer code { background: #f0f0ed; padding: 1px 6px; border-radius: 4px; font-size: 11.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>App Name Preview</h1>
+    <p class="lead">Wpisz nazwę i podtytuł — sprawdź jak wyglądają na ekranie startowym, w wynikach wyszukiwania i na karcie aplikacji w obu sklepach.</p>
+  </header>
+
+  <div class="input-card">
+    <div class="input-row" style="margin-bottom: 12px;">
+      <label for="name-input">Nazwa aplikacji</label>
+      <input id="name-input" type="text" value="Moja Apka" placeholder="np. LineApp" maxlength="50">
+      <div class="counter" id="name-counter">9 / 30</div>
+    </div>
+    <div class="input-row">
+      <label for="subtitle-input">Podtytuł / krótki opis</label>
+      <input id="subtitle-input" type="text" value="Festiwale, mapy, lineupy" placeholder="iOS subtitle / Play short desc" maxlength="100">
+      <div class="counter" id="subtitle-counter">25 / 30</div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <!-- iOS Springboard -->
+    <div class="card">
+      <h3>iOS — ekran startowy (Springboard)</h3>
+      <p class="meta">Limit przed obcięciem: <strong>~11-12 znaków</strong>. Po przekroczeniu pojawia się <code>…</code>. To jest nazwa z bundla aplikacji (CFBundleDisplayName), zwykle = App Store name.</p>
+      <div class="ios-springboard">
+        <div class="ios-icon">A</div>
+        <div class="label" id="ios-springboard-label">Moja Apka</div>
+      </div>
+      <div class="truncation-flag" id="flag-ios-springboard">⚠ Nazwa zostanie obcięta na ekranie startowym</div>
+    </div>
+
+    <!-- iOS App Store search -->
+    <div class="card">
+      <h3>iOS App Store — wynik wyszukiwania</h3>
+      <p class="meta">Nazwa: max <strong>30 znaków</strong>, podtytuł: max <strong>30 znaków</strong>. W kafelku wyniku oba w jednej linii z <code>…</code> po przekroczeniu szerokości.</p>
+      <div class="ios-search-row">
+        <div class="icon"></div>
+        <div class="info">
+          <div class="name" id="ios-search-name">Moja Apka</div>
+          <div class="subtitle" id="ios-search-subtitle">Festiwale, mapy, lineupy</div>
+        </div>
+        <div class="get-btn">POBIERZ</div>
+      </div>
+    </div>
+
+    <!-- iOS App Store product page -->
+    <div class="card">
+      <h3>iOS App Store — karta aplikacji</h3>
+      <p class="meta">Headline strony produktu. Nazwa <strong>30 zn.</strong> + podtytuł <strong>30 zn.</strong> + (opcjonalnie) promotional text 170 zn.</p>
+      <div class="ios-product">
+        <div class="ios-product-head">
+          <div class="icon"></div>
+          <div>
+            <div class="name" id="ios-product-name">Moja Apka</div>
+            <div class="subtitle" id="ios-product-subtitle">Festiwale, mapy, lineupy</div>
+            <div class="meta-row">★ 4.8 · 1.2K · #4 Music</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Android launcher -->
+    <div class="card">
+      <h3>Android — launcher (ekran startowy)</h3>
+      <p class="meta">Limit przed obcięciem: <strong>~10-11 znaków</strong> (Pixel launcher). Inne launchery pozwalają na 2 linie. Domyślnie 1 linia + <code>…</code>.</p>
+      <div class="android-launcher">
+        <div class="android-icon"></div>
+        <div class="label" id="android-launcher-label">Moja Apka</div>
+      </div>
+      <div class="truncation-flag" id="flag-android-launcher">⚠ Nazwa zostanie obcięta w launcherze</div>
+    </div>
+
+    <!-- Google Play search row -->
+    <div class="card">
+      <h3>Google Play — wynik wyszukiwania</h3>
+      <p class="meta">Tytuł aplikacji: max <strong>30 znaków</strong> (twarde, Google odrzuca). Nazwa dewelopera pod spodem, ocena, rozmiar.</p>
+      <div class="play-row">
+        <div class="icon"></div>
+        <div class="info">
+          <div class="name" id="play-row-name">Moja Apka</div>
+          <div class="dev">PMG Group</div>
+          <div class="rating">★ 4.8 · 1.2K reviews · 24 MB</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Play product page -->
+    <div class="card">
+      <h3>Google Play — karta aplikacji</h3>
+      <p class="meta">Tytuł: <strong>30 zn.</strong>, krótki opis: <strong>80 zn.</strong>, pełny opis: 4000 zn. Krótki opis jest pierwszym co user widzi pod nazwą.</p>
+      <div class="play-product">
+        <div class="play-product-head">
+          <div class="icon"></div>
+          <div style="flex: 1; min-width: 0;">
+            <div class="name" id="play-product-name">Moja Apka</div>
+            <div class="dev">PMG Group</div>
+          </div>
+        </div>
+        <div class="short-desc" id="play-product-short">Festiwale, mapy, lineupy</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <h4>Limity i źródła</h4>
+    <ul>
+      <li><strong>iOS App Store name</strong>: 30 znaków max (od czerwca 2017, wcześniej 50). Apple App Store Connect blokuje przekroczenie. <a href="https://developer.apple.com/app-store/product-page/" target="_blank">developer.apple.com/app-store/product-page</a></li>
+      <li><strong>iOS App Store subtitle</strong>: 30 znaków max (od iOS 11). Wyświetla się pod nazwą w wyszukiwaniu i na karcie produktu.</li>
+      <li><strong>iOS Springboard</strong>: nazwa z <code>CFBundleDisplayName</code> w Info.plist. Truncation ~11-12 znaków przy iPhone standard, ~13 na Pro Max. Można podać krótszą display name niż App Store name.</li>
+      <li><strong>Google Play title</strong>: 30 znaków max. <a href="https://support.google.com/googleplay/android-developer/answer/9866151" target="_blank">support.google.com/googleplay/android-developer/answer/9866151</a></li>
+      <li><strong>Google Play short description</strong>: 80 znaków max. Pełny opis 4000 znaków.</li>
+      <li><strong>Android launcher</strong>: nazwa z <code>android:label</code> w AndroidManifest.xml. Pixel launcher truncate na ~10-11 znakach z <code>…</code>; Samsung One UI / Nova allow 2-line wrap.</li>
+    </ul>
+    <h4 style="margin-top: 16px;">Dobra praktyka</h4>
+    <ul>
+      <li>Trzymaj <strong>nazwę ≤ 12 znaków</strong> jeśli zależy Ci żeby na ekranie startowym była czytelna w całości na obu platformach.</li>
+      <li>Wykorzystaj <strong>subtitle / short description</strong> na keywords i opis — nie wpychaj ich do nazwy (Apple od 2018 karze "keyword stuffing" w nazwie).</li>
+      <li>Jeśli nazwa marki jest długa, użyj <code>CFBundleDisplayName</code> krótszego niż App Store name (np. App Store: „LineApp Festivals", Springboard: „LineApp").</li>
+      <li>Polskie znaki (ł, ą, ę, ó) liczą się jako 1 znak w obu sklepach.</li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+  const nameInput = document.getElementById('name-input');
+  const subtitleInput = document.getElementById('subtitle-input');
+  const nameCounter = document.getElementById('name-counter');
+  const subtitleCounter = document.getElementById('subtitle-counter');
+
+  const SPRINGBOARD_LIMIT_IOS = 12;
+  const LAUNCHER_LIMIT_ANDROID = 11;
+
+  function truncate(str, n) {
+    if (str.length <= n) return str;
+    return str.slice(0, n - 1) + '…';
+  }
+
+  function updateCounter(el, len, max) {
+    el.textContent = `${len} / ${max}`;
+    el.classList.remove('ok', 'warn', 'bad');
+    if (len === 0) return;
+    if (len > max) el.classList.add('bad');
+    else if (len > max - 5) el.classList.add('warn');
+    else el.classList.add('ok');
+  }
+
+  function render() {
+    const name = nameInput.value || ' ';
+    const subtitle = subtitleInput.value || ' ';
+
+    updateCounter(nameCounter, nameInput.value.length, 30);
+    updateCounter(subtitleCounter, subtitleInput.value.length, 80);
+
+    // iOS Springboard
+    const sb = truncate(name, SPRINGBOARD_LIMIT_IOS);
+    document.getElementById('ios-springboard-label').textContent = sb;
+    document.getElementById('flag-ios-springboard').classList.toggle('show', name.length > SPRINGBOARD_LIMIT_IOS);
+
+    // iOS App Store search
+    document.getElementById('ios-search-name').textContent = name;
+    document.getElementById('ios-search-subtitle').textContent = subtitle;
+
+    // iOS App Store product page
+    document.getElementById('ios-product-name').textContent = name;
+    document.getElementById('ios-product-subtitle').textContent = subtitle;
+
+    // Android launcher
+    const al = truncate(name, LAUNCHER_LIMIT_ANDROID);
+    document.getElementById('android-launcher-label').textContent = al;
+    document.getElementById('flag-android-launcher').classList.toggle('show', name.length > LAUNCHER_LIMIT_ANDROID);
+
+    // Google Play search row
+    document.getElementById('play-row-name').textContent = name;
+
+    // Google Play product page
+    document.getElementById('play-product-name').textContent = name;
+    document.getElementById('play-product-short').textContent = subtitle;
+
+    // Counter limits — App Store name is 30, Play title is 30, but subtitle can go to 80 for Play short desc
+    // We use 30 for name counter, 80 for subtitle counter (since 80 covers Play short desc; iOS subtitle limit 30 will still trigger warn earlier)
+  }
+
+  nameInput.addEventListener('input', render);
+  subtitleInput.addEventListener('input', render);
+  render();
+</script>
+</body>
+</html>
